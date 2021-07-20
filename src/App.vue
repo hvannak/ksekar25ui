@@ -1,7 +1,8 @@
 <template>
   <div id="nav">
     <router-link to="/"><fa icon="home" class="fa-4x" /></router-link> |
-    <router-link to="/about"><fa icon="carrot" class="fa-4x" /></router-link>
+    <router-link to="/about"><fa icon="carrot" class="fa-4x" /></router-link> |
+    <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
   </div>
   <font-awesome-icon icon="user-secret" />
   <router-view />

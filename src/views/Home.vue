@@ -4,6 +4,13 @@
   </div>
 </template>
 
+<style lang="scss">
+  @import '@/assets/styles/_shared.scss';
+  .home {
+    background-color: $base-color;
+  }
+</style>
+
 <script>
 
 </script>
