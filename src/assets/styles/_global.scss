@@ -1,3 +1,22 @@
+@import '_shared.scss';
+@import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap');
+
 body {
-    background-color: black;
+    background-color: $bg-color;
+    margin: auto;
+    overflow-x: hidden;
 }
+
+.flex-container {
+    display: flex;
+    background-color: #f1f1f1;
+    height: 500px;
+}
+
+.flex-container > div {
+    font-family: 'Battambang', cursive;
+    background-color: DodgerBlue;
+    color: white;
+    text-align: left;
+    font-size: 20px;
+  }
