@@ -1,5 +1,9 @@
-@import '_shared.scss';
+
 @import url('https://fonts.googleapis.com/css2?family=Battambang:wght@400;700&display=swap');
+
+html {
+    scroll-behavior: smooth;
+  }
 
 body {
     background-color: $bg-color;
@@ -9,7 +13,7 @@ body {
 
 .flex-container {
     display: flex;
-    background-color: #f1f1f1;
+    background-color: $flex-container-color;
     height: 500px;
 }
 
@@ -19,4 +23,26 @@ body {
     color: white;
     text-align: left;
     font-size: 20px;
+  }
+
+  .mytopBtn {
+    display: block;
+    position: fixed;
+    bottom: 20px;
+    right: 30px;
+    z-index: 99;
+    font-size: 18px;
+    border: none;
+    outline: none;
+    background-color: $link-color;
+    color: white;
+    cursor: pointer;
+    padding: 15px;
+    border-radius: 4px;
+    opacity: 0.5;
+  }
+
+  .mytopBtn:hover {
+    background-color: $hover-color;
+    opacity: 1;
   }

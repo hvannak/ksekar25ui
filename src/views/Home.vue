@@ -17,10 +17,12 @@
       </div>
     </template>
   </div>
+  <button v-show="moveTop" @click="scrollTop()" class="mytopBtn" title="Go to top">
+    <fa icon="angle-double-up" class="fa-2x" />
+  </button>
 </template>
 
 <style lang="scss">
-  @import '@/assets/styles/_shared.scss';
   .item1 {
     width: 30%;
     padding: 50px;
@@ -38,13 +40,32 @@
   import 'aos/dist/aos.css';
 
   export default {
+    data () {
+      return {
+        moveTop: false
+      }
+    },
     created(){
       AOS.init();
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll(){
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          this.moveTop = true;
+        } else {
+         this.moveTop = false;
+        }
+      },
+      scrollTop(){
+        window.scrollTo(0,0);
+      }
     },
     setup(){
       const count = ref(10);
       const item1 = 'item1';
       const item2 = 'item2';
+      
       return {
         count,
         item1,
