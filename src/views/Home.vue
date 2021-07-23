@@ -1,4 +1,5 @@
 <template>
+  <SwiperSlider/>
   <div v-for="item in count" :key="item" class="flex-container" data-aos="zoom-out-left">
     <template v-if="item%2">
       <div v-bind:class="item1">
@@ -38,16 +39,24 @@
   import { ref } from 'vue'
   import AOS from 'aos';
   import 'aos/dist/aos.css';
+  import SwiperSlider from '../components/SwiperSlider.vue'
 
   export default {
+    components: {
+      SwiperSlider
+    },
     data () {
       return {
-        moveTop: false
+        moveTop: false,
+        slideIndex: 1
       }
     },
     created(){
       AOS.init();
       window.addEventListener('scroll', this.handleScroll);
+    },
+    mounted() {
+      // this.$nextTick(this.showSlides(this.slideIndex));
     },
     methods: {
       handleScroll(){
@@ -59,7 +68,13 @@
       },
       scrollTop(){
         window.scrollTo(0,0);
-      }
+      },
+      onSwiper(swiper) {
+        console.log(swiper);
+      },
+      onSlideChange() {
+        console.log('slide change');
+      },
     },
     setup(){
       const count = ref(10);
