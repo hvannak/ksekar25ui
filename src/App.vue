@@ -20,7 +20,7 @@
   }
 
   #footer{
-    outline: #4CAF50 solid 5px;
+    outline: $outline-color solid $outline-width;
     height: 50px;
     position: fixed;
     left: 0;
@@ -33,7 +33,7 @@
 
   #nav {
     padding: 30px;
-    outline: #4CAF50 solid 5px;
+    outline: $outline-color solid $outline-width;
 
     a {
       font-weight: bold;
