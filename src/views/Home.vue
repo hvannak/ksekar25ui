@@ -1,5 +1,7 @@
 <template>
-  <SwiperSlider/>
+  <div class="mySlider">
+      <SwiperSlider/>
+  </div>
   <div v-for="item in count" :key="item" class="flex-container" data-aos="zoom-out-left">
     <template v-if="item%2">
       <div v-bind:class="item1">
@@ -32,6 +34,10 @@
   .item2 {
     width: 70%;
     padding: 50px;
+  }
+
+  .mySlider{
+    padding-top: 3px;
   }
 </style>
 

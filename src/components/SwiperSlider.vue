@@ -26,7 +26,7 @@
         :data-swiper-parallax="parallaxAmount"
         :data-swiper-parallax-opacity="0.5"
       >
-        <img src="https://via.placeholder.com/1024x250" class="parallax-slide" />
+        <img src="https://via.placeholder.com/750x250" class="parallax-slide" />
       </div>
     </swiper-slide>
   </swiper>

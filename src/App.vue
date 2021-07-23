@@ -6,7 +6,7 @@
   </div>
   <router-view />
   <div id="footer">
-
+    <p>&copy; - កសិករ២៥ - ទំនាក់ទំនង៖ 078 949 799 - vannak2010@gmail.com</p>
   </div>
 </template>
 
@@ -20,12 +20,20 @@
   }
 
   #footer{
-    height: 300px;
+    outline: #4CAF50 solid 5px;
+    height: 50px;
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    color: white;
+    text-align: center;
     background-color: $base-color;
   }
 
   #nav {
     padding: 30px;
+    outline: #4CAF50 solid 5px;
 
     a {
       font-weight: bold;
