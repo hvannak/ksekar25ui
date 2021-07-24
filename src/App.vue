@@ -7,6 +7,14 @@
   <router-view />
   <div id="footer">
     <p>&copy; - កសិករ២៥ - ទំនាក់ទំនង៖ 078 949 799 - vannak2010@gmail.com</p>
+    <p>
+      <i class="fab fa-facebook-square fa-2x iconline"></i>
+      <i class="fab fa-twitter-square fa-2x iconline"></i>
+      <i class="fab fa-youtube-square fa-2x iconline"></i>
+      <i class="fab fa-instagram-square fa-2x iconline"></i>
+      <i class="fab fa-linkedin fa-2x iconline"></i>
+      <i class="fab fa-telegram fa-2x iconline"></i>
+    </p>
   </div>
 </template>
 
@@ -21,7 +29,7 @@
 
   #footer{
     outline: $outline-color solid $outline-width;
-    height: 50px;
+    height: 100px;
     position: fixed;
     left: 0;
     bottom: 0;
@@ -29,6 +37,17 @@
     color: white;
     text-align: center;
     background-color: $base-color;
+    margin-top: -12px;
+  }
+
+  .iconline {
+    margin-right: 5px;
+    margin-left: 5px;
+    cursor: pointer;
+  }
+
+  .iconline:hover {
+    color: $hover-color;
   }
 
   #nav {
