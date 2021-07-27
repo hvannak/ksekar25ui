@@ -1,8 +1,16 @@
 <template>
   <div id="nav">
-    <router-link to="/"><fa icon="home" class="fa-4x" /></router-link> |
-    <router-link to="/about"><i class="fas fa-comments-dollar fa-4x"></i></router-link> |
-    <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
+    <div class="brand">
+      <router-link to="/"><fa icon="tractor" class="fa-4x" />កសិករ២៥</router-link>
+    </div>
+    <div class="navmenu">
+      <router-link to="/"><fa icon="home" class="fa-4x" /></router-link> |
+      <router-link to="/about"><i class="fas fa-comments-dollar fa-4x"></i></router-link> |
+      <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
+    </div>
+    <div class="langmenu">
+      <router-link to="/"><fa icon="language" class="fa-4x" /></router-link>
+    </div>
   </div>
   <router-view />
   <div id="footer">
@@ -23,8 +31,26 @@
     font-family: Avenir, Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    text-align: center;
+    // text-align: center;
     color: #2c3e50;
+  }
+
+  .brand {
+    margin-left: 0;
+    font-size: 18px;
+    font-weight: 900;
+  }
+
+  .navmenu {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+  }
+
+  .langmenu {
+    margin-right: 0;
+    font-size: 18px;
+    font-weight: 900;
   }
 
   #footer{
@@ -53,6 +79,7 @@
   #nav {
     padding: 30px;
     outline: $outline-color solid $outline-width;
+    display: flex;
 
     a {
       font-weight: bold;
