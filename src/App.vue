@@ -5,7 +5,7 @@
     </div>
     <div class="navmenu">
       <router-link to="/"><fa icon="home" class="fa-4x" /></router-link> |
-      <router-link to="/about"><i class="fas fa-comments-dollar fa-4x"></i></router-link> |
+      <router-link to="/products"><i class="fas fa-comments-dollar fa-4x"></i></router-link> |
       <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
     </div>
     <div class="langmenu">
@@ -24,15 +24,47 @@
       <i class="fab fa-telegram fa-2x iconline"></i>
     </p>
   </div>
+      <button v-show="moveTop" @click="scrollTop()" class="mytopBtn" title="Go to top">
+      <fa icon="angle-double-up" class="fa-2x" />
+  </button>
 </template>
+
+<script>
+  import AOS from 'aos';
+  import 'aos/dist/aos.css';
+
+  export default {
+    data () {
+      return {
+        moveTop: false,
+      }
+    },
+    created(){
+      AOS.init();
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    methods: {
+      handleScroll(){
+        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+          this.moveTop = true;
+          var relativefooter = document.getElementById("footer");
+          relativefooter.style.position = "relative";
+        } else {
+         this.moveTop = false;
+          var fixfooter = document.getElementById("footer");
+          fixfooter.style.position = "fixed";
+        }
+      },
+      scrollTop(){
+        window.scrollTo(0,0);
+      }
+    }
+  }
+</script>
 
 <style lang="scss">
   #app {
-    font-family: Avenir, Helvetica, Arial, sans-serif;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    // text-align: center;
-    color: #2c3e50;
+    font-family: 'Battambang', cursive;
   }
 
   .brand {
@@ -63,7 +95,6 @@
     color: white;
     text-align: center;
     background-color: $base-color;
-    margin-top: -12px;
   }
 
   .iconline {

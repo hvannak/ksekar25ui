@@ -7,6 +7,8 @@ import { fas }  from '@fortawesome/free-solid-svg-icons'
 import { fab } from '@fortawesome/free-brands-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from "@fortawesome/fontawesome-svg-core"
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap";
 
 dom.watch()
 library.add(fas,fab)
