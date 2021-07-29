@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Notification from '../views/Notification.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
+import ControlPanel from '../views/ControlPanel.vue'
 
 const routes = [
   {
@@ -32,6 +33,11 @@ const routes = [
     path: '/login',
     name: 'Login',
     component: Login
+  },
+  {
+    path: '/controlPanel',
+    name: 'ControlPanel',
+    component: ControlPanel
   },
 ]
 
