@@ -10,30 +10,30 @@
             <div class="input-group-text"><fa icon="user" class="fa-2x" /></div>
             <input
               type="text"
+              name="email"
               class="form-control"
-              id="inlineFormInputGroupUsername"
               placeholder="Username"
               v-model="userObj.email"
-              required
-            />
+            />          
           </div>
+          <div v-if="v$.email.$invalid">Value is not a valid email address</div>
         </div>
         <div class="col-6 offset-3">
-          <div class="input-group has-validation">
+          <div class="input-group">
             <div class="input-group-text"><fa icon="key" class="fa-2x" /></div>
             <input
-              type="text"
+              type="password"
+              name="password"
               class="form-control"
-              id="inlineFormInputGroupUsername"
               placeholder="Password"
               v-model="userObj.password"
-              required
             />
           </div>
+          <div v-if="v$.password.$invalid">Value is required 6 digit</div>
         </div>
         <div class="col-6 offset-3">
             <div class="d-grid gap-2">
-                <button @click="loginUser" class="btn btn-primary" type="submit">Login</button>
+                <button :disabled="v$.$invalid" @click="loginUser()" class="btn btn-primary" type="submit">Login</button>
             </div>
         </div>
       </form>
@@ -43,17 +43,32 @@
 
 <script>
   import { useStore } from 'vuex'
-  import { ref } from 'vue'
+  import { reactive } from 'vue'
+  import { useVuelidate } from '@vuelidate/core'
+  import { email, required, minLength } from '@vuelidate/validators'
 
   export default {
     setup () {
-      const userObj = ref({});
       const store = useStore();
+      const userObj = reactive({
+        email: '',
+        password: ''
+      });
+      const rules = {
+        email: { required, email },
+        password: { required, minLength: minLength(6) }
+      };
+      const v$ = useVuelidate(rules, userObj);
+
       return {
         userObj,
-        loginUser: () => store.dispatch('loginUser',userObj.value)
+        v$,
+        loginUser: () => {
+          store.dispatch('loginUser',userObj)
+        }
       }
     }
+    
   };
 </script>
 

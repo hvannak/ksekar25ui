@@ -46,4 +46,14 @@ const router = createRouter({
   routes
 })
 
+router.beforeEach((to, from, next) => {
+  if((to.name == 'Login' && localStorage.getItem('token') != null)){
+    next({name:'ControlPanel'});
+  }
+  if(to.fullPath.startsWith('/controlpanel') && localStorage.getItem('token') == null ){
+    next({name:'Home'});
+  }
+  else next()
+});
+
 export default router

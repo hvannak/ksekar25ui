@@ -15,6 +15,7 @@ const getters = {
 const actions = {
   async loginUser({ commit }, userObj) {
     try {
+      console.log(userObj);
       const response = await axios.post(
         `${apihelper.api_url}/auth/login`,userObj);
         localStorage.setItem('token',response.data);
