@@ -1,0 +1,17 @@
+[
+    {
+        "name":"setting",
+        "title":"Setting",
+        "icon":"cogs"
+    },
+    {
+        "name":"workarea",
+        "title":"Work Area",
+        "icon":"laptop-house"
+    },
+    {
+        "name":"auth",
+        "title":"Authentication",
+        "icon":"users-cog"
+    }
+]

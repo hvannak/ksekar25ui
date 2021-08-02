@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 import { dom } from "@fortawesome/fontawesome-svg-core"
 import "bootstrap/dist/css/bootstrap.min.css";
 import "bootstrap";
-import "bootstrap-icons/font/bootstrap-icons.css"
+// import "bootstrap-icons/font/bootstrap-icons.css"
 
 dom.watch()
 library.add(fas,fab)

@@ -4,7 +4,6 @@ import Notification from '../views/Notification.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
 import ControlPanel from '../views/ControlPanel.vue'
-import About from '../views/About.vue'
 
 const routes = [
   {
@@ -42,27 +41,30 @@ const routes = [
     component: ControlPanel,
     children:[
       {
-        path: 'setting',
-        name: 'Setting',
-        meta: { title: 'Languages',icon: 'cogs'},
-        component: About,
-        children:[
-          {
-            path: 'languages',
-            name: 'Languages',
-            meta: { title: 'Languages',icon: 'bell'},
-            component: Home
-          },
-          {
-            path: 'localize',
-            name: 'Localize',
-            meta: { title: 'Localize',icon: 'language' },
-            component: Login
-          },
-        ]
-      }
-
-    ],
+        path: 'languages',
+        name: 'Languages',
+        meta: { title: 'Languages',group:'setting'},
+        component: Home
+      },
+      {
+        path: 'localize',
+        name: 'Localize',
+        meta: { title: 'Localize',group:'setting' },
+        component: Login
+      },
+      {
+        path: 'products',
+        name: 'Products',
+        meta: { title: 'Products',group:'workarea'},
+        component: Home
+      },
+      {
+        path: 'users',
+        name: 'Users',
+        meta: { title: 'Users',group:'auth' },
+        component: Login
+      },
+    ]
   },
 ]
 
@@ -71,14 +73,14 @@ const router = createRouter({
   routes
 })
 
-// router.beforeEach((to, from, next) => {
-//   if((to.name == 'Login' && localStorage.getItem('token') != null)){
-//     next({name:'ControlPanel'});
-//   }
-//   if(to.fullPath.startsWith('/controlpanel') && localStorage.getItem('token') == null ){
-//     next({name:'Home'});
-//   }
-//   else next()
-// });
+router.beforeEach((to, from, next) => {
+  if((to.name == 'Login' && localStorage.getItem('token') != null)){
+    next({name:'ControlPanel'});
+  }
+  if(to.fullPath.startsWith('/controlpanel') && localStorage.getItem('token') == null ){
+    next({name:'Home'});
+  }
+  else next()
+});
 
 export default router
