@@ -4,20 +4,15 @@ import Notification from '../views/Notification.vue'
 import Products from '../views/Products.vue'
 import Login from '../views/Login.vue'
 import ControlPanel from '../views/ControlPanel.vue'
+import Languages from '../views/manage/Languages.vue'
+import Localize from '../views/manage/Localize.vue'
+import ControlProducts from '../views/manage/CtlProducts.vue'
 
 const routes = [
   {
     path: '/',
     name: 'Home',
     component: Home
-  },
-  {
-    path: '/about',
-    name: 'About',
-    // route level code-splitting
-    // this generates a separate chunk (about.[hash].js) for this route
-    // which is lazy-loaded when the route is visited.
-    component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
     path: '/notication',
@@ -44,19 +39,19 @@ const routes = [
         path: 'languages',
         name: 'Languages',
         meta: { title: 'Languages',group:'setting'},
-        component: Home
+        component: Languages
       },
       {
         path: 'localize',
         name: 'Localize',
         meta: { title: 'Localize',group:'setting' },
-        component: Login
+        component: Localize
       },
       {
-        path: 'products',
-        name: 'Products',
+        path: 'ctlproducts',
+        name: 'CtlProducts',
         meta: { title: 'Products',group:'workarea'},
-        component: Home
+        component: ControlProducts
       },
       {
         path: 'users',
