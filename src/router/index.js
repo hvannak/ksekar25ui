@@ -7,6 +7,7 @@ import ControlPanel from '../views/ControlPanel.vue'
 import Languages from '../views/manage/Languages.vue'
 import Localize from '../views/manage/Localize.vue'
 import ControlProducts from '../views/manage/CtlProducts.vue'
+import ControlPosts from '../views/manage/CtlPosts.vue'
 
 const routes = [
   {
@@ -52,6 +53,12 @@ const routes = [
         name: 'CtlProducts',
         meta: { title: 'Products',group:'workarea'},
         component: ControlProducts
+      },
+      {
+        path: 'ctlposts',
+        name: 'CtlPosts',
+        meta: { title: 'Posts',group:'workarea'},
+        component: ControlPosts
       },
       {
         path: 'users',

@@ -1,9 +1,5 @@
 [
-    {
-        "name":"setting",
-        "title":"Setting",
-        "icon":"cogs"
-    },
+
     {
         "name":"workarea",
         "title":"Work Area",
@@ -13,5 +9,10 @@
         "name":"auth",
         "title":"Authentication",
         "icon":"users-cog"
+    },
+    {
+        "name":"setting",
+        "title":"Setting",
+        "icon":"cogs"
     }
 ]

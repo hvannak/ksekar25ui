@@ -28,15 +28,13 @@
 </template>
 
 <script>
-import { useRouter, useRoute} from 'vue-router'
+import { useRouter } from 'vue-router'
 import appMenu from '../appSetting.json'
 
 export default {
   setup(){
     const router = useRouter();
     let routerData = router.options.routes.filter(x=>x.name == 'ControlPanel');
-    console.log(routerData);
-    console.log(useRoute().path);
     return {
       routerData,
       appMenu
