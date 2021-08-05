@@ -15,6 +15,16 @@ const getters = {
 };
 
 const actions = {
+  async getLanguageAll({ commit }) {
+    try {
+      const response = await axios.get(
+        `${apihelper.api_url}/language/all`);
+        commit('updateLanguageList',response.data);
+    } catch (err) {
+      commit('updateLanguageMessage',err.response.data);
+    }
+  },
+
     async getLanguageList({ commit },pageObj) {
         try {
           const response = await axios.post(

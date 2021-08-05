@@ -8,6 +8,7 @@ import Languages from '../views/manage/Languages.vue'
 import Localize from '../views/manage/Localize.vue'
 import ControlProducts from '../views/manage/CtlProducts.vue'
 import ControlPosts from '../views/manage/CtlPosts.vue'
+import Category from '../views/manage/Category.vue'
 
 const routes = [
   {
@@ -41,6 +42,12 @@ const routes = [
         name: 'Languages',
         meta: { title: 'Languages',group:'setting'},
         component: Languages
+      },
+      {
+        path: 'category',
+        name: 'Category',
+        meta: { title: 'Category',group:'setting' },
+        component: Category
       },
       {
         path: 'localize',
