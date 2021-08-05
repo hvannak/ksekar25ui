@@ -245,23 +245,14 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import {ref, reactive, computed } from "vue";
+import {reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import useRepositories from "../../utility/repositories";
 
 export default {
   setup() {
-    let sortIcon = ref('sort-up');
-    let pageObj = {
-      pageSize: 1,
-      page: 1,
-      sortBy: "_id",
-      sortType: "asc",
-      searchObjby: "0",
-      searchObj: "",
-    };
-    const store = useStore();
+    const {sortIcon,pageObj,store} = useRepositories();
     store.dispatch("getcategoryProps");
     store.dispatch("getLanguageAll");
     store.dispatch("getcategoryList", pageObj);
@@ -322,7 +313,7 @@ export default {
           pageObj.page = pageObj.page + 1;
           store.dispatch("getcategoryList", pageObj);
         }
-      },
+      },     
       onSort: (prop) => {
         pageObj.sortBy = prop;
         pageObj.sortType = (pageObj.sortType == 'asc') ? 'desc' : 'asc';

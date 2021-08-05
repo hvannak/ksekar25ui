@@ -244,23 +244,14 @@
 </template>
 
 <script>
-import { useStore } from "vuex";
-import {ref, reactive, computed } from "vue";
+import { reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
 import { required, minLength } from "@vuelidate/validators";
+import useRepositories from "../../utility/repositories";
 
 export default {
   setup() {
-    let sortIcon = ref('sort-up');
-    let pageObj = {
-      pageSize: 1,
-      page: 1,
-      sortBy: "_id",
-      sortType: "asc",
-      searchObjby: "0",
-      searchObj: "",
-    };
-    const store = useStore();
+    const {sortIcon,pageObj,store} = useRepositories();
     store.dispatch("getLanguageProps");
     store.dispatch("getLanguageList", pageObj);
     const initObj = {
