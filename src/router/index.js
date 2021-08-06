@@ -9,6 +9,7 @@ import Localize from '../views/manage/Localize.vue'
 import ControlProducts from '../views/manage/CtlProducts.vue'
 import ControlPosts from '../views/manage/CtlPosts.vue'
 import Category from '../views/manage/Category.vue'
+import Users from '../views/manage/Users.vue'
 
 const routes = [
   {
@@ -71,7 +72,7 @@ const routes = [
         path: 'users',
         name: 'Users',
         meta: { title: 'Users',group:'auth' },
-        component: Login
+        component: Users
       },
     ]
   },

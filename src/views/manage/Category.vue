@@ -189,6 +189,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
+              :disabled="v$.$invalid"
               @click="`${categoryObj._id.length > 0 ? saveData(categoryObj,'putCategory') : saveData(categoryObj,'postCategory')}`"
             >
               Save
@@ -209,7 +210,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Language Delete</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Category Delete</h5>
             <button
               type="button"
               class="btn-close"

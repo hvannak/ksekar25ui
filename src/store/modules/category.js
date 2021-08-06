@@ -56,10 +56,10 @@ const actions = {
     }
   },
 
-  async putCategory({ commit }, langObj) {
+  async putCategory({ commit }, categoryObj) {
     try {
         const response = await axios.put(
-        `${apihelper.api_url}/category/put/${langObj._id}`,langObj,apihelper.setToken());
+        `${apihelper.api_url}/category/put/${categoryObj._id}`,categoryObj,apihelper.setToken());
         commit('updateCategory', response.data.obj);
         commit('updatecategorymessage',response.data.message);
     } catch (err) {
@@ -74,13 +74,13 @@ const mutations = {
     updatecategoryProps:(state,props) => (state.categoryProps = props),
     updatecategoryList:(state,list) => (state.categoryList = list),
     updatecategoryDoc:(state,doc) => (state.categoryTotalDoc = doc),
-    newCategory: (state, lang) => state.categoryList.unshift(lang),
+    newCategory: (state, cat) => state.categoryList.unshift(cat),
     removeCategory: (state, _id) =>
-        (state.categoryList = state.categoryList.filter(lang => lang._id !== _id)),
-    updateCategory: (state, langObj) => {
-        const index = state.categoryList.findIndex(lang => lang._id === langObj._id);
+        (state.categoryList = state.categoryList.filter(c => c._id !== _id)),
+    updateCategory: (state, catObj) => {
+        const index = state.categoryList.findIndex(c => c._id === catObj._id);
         if (index !== -1) {
-          state.categoryList.splice(index, 1, langObj);
+          state.categoryList.splice(index, 1, catObj);
         }
     }
 };

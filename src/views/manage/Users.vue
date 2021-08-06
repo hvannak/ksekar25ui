@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="findData('getLanguageList')"
+                @click="findData('getuserList')"
               >
                 Find
               </button>
@@ -38,9 +38,8 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getLanguageList')" /></th>
-          <th scope="col">Short Code<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getLanguageList')" /></th>
-          <th scope="col">Default<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('default','getLanguageList')" /></th>
+          <th scope="col">Name<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getuserList')" /></th>
+          <th scope="col">Email<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getuserList')" /></th>        
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -59,11 +58,10 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in languageList" :key="index">
+        <tr v-for="(item, index) in userList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
-          <td>{{ item.title }}</td>
-          <td>{{ item.shortcode }}</td>
-          <td>{{ item.default }}</td>
+          <td>{{ item.name }}</td>
+          <td>{{ item.email }}</td>
           <td>
             <fa
               icon="edit"
@@ -92,17 +90,17 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="prevData('getLanguageList')"
+                    @click="prevData('getuserList')"
                   />
                 </li>
                 <li class="page-item">
-                  {{ pageObj.page }} Of {{ languageDoc }}
+                  {{ pageObj.page }} Of {{ userDoc }}
                 </li>
                 <li class="page-item">
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="nextData(languageDoc,'getLanguageList')"
+                    @click="nextData(userDoc,'getuserList')"
                   />
                 </li>
               </ul>
@@ -125,7 +123,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="neweditModalLabel">
-              Language Input
+              User Input
             </h5>
             <button
               type="button"
@@ -138,42 +136,56 @@
             <form class="row g-3 align-items-center">
               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Title</div>
+                  <div class="input-group-text">Name</div>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="langObj.title"
+                    v-model="userObj.name"
                   />
                 </div>
-                <div v-if="v$.title.$invalid">Value is required 4 digits</div>
+                <div v-if="v$.name.$invalid">Value is required 4 digits</div>
               </div>
               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Short Code</div>
+                  <div class="input-group-text">Email</div>
                   <input
                     type="text"
                     class="form-control"
-                    v-model="langObj.shortcode"
+                    v-model="userObj.email"
                   />
                 </div>
-                <div v-if="v$.shortcode.$invalid">
-                  Value is required 2 digits
+                <div v-if="v$.email.$invalid">
+                  Value is email required 
                 </div>
               </div>
               <div class="col-12">
-                <div class="form-check">
+                <div class="input-group">
+                  <div class="input-group-text">Password</div>
                   <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    v-model="langObj.default"
+                    type="password"
+                    class="form-control"
+                    v-model="userObj.password"
                   />
-                  <label class="form-check-label" for="flexCheckDefault">
-                    Default
-                  </label>
                 </div>
-                <div v-if="v$.default.$invalid">Value is required</div>
+                <div v-if="v$.password.$invalid">
+                  Value is required 6 digits
+                </div>
               </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">Confirm Password</div>
+                  <input
+                    type="password"
+                    class="form-control"
+                    v-model="userObj.confirmpassword"
+                  />
+                </div>
+                <div v-if="v$.confirmpassword.$invalid">
+                    {{v$.confirmpassword.sameAsPassword}}
+                  Value is required to confirm
+                </div>
+              </div>
+
             </form>
           </div>
           <div class="modal-footer">
@@ -189,7 +201,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               :disabled="v$.$invalid"
-              @click="`${langObj._id.length > 0 ? saveData(langObj,'putLanguage') : saveData(langObj,'postLanguage')}`"
+              @click="`${userObj._id.length > 0 ? saveData(userObj,'putUser') : saveData(userObj,'postUser')}`"
             >
               Save
             </button>
@@ -209,7 +221,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Language Delete</h5>
+            <h5 class="modal-title" id="deleteModalLabel">User Delete</h5>
             <button
               type="button"
               class="btn-close"
@@ -232,7 +244,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(langObj._id,'deleteCategory')"
+              @click="deleteData(userObj._id,'deleteUser')"
             >
               Delete
             </button>
@@ -245,47 +257,49 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import {reactive, computed } from "vue";
 import { useVuelidate } from "@vuelidate/core";
-import { required, minLength } from "@vuelidate/validators";
+import { required, minLength,email,sameAs } from "@vuelidate/validators";
 import useRepositories from "../../utility/repositories";
 
 export default {
   setup() {
     const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
-    = useRepositories('getLanguageList',['getLanguageProps']);
+    = useRepositories('getuserList',['getuserProps']);
     const initObj = {
       _id: "",
-      title: "",
-      shortcode: "",
-      default: false,
+      name: "",
+      email: "",
+      password: "",
+      confirmpassword: ""
     };
-    let langObj = reactive({ initObj });
+    let userObj = reactive({ initObj });
     const rules = {
-      title: { required, minLength: minLength(4) },
-      shortcode: { required, minLength: minLength(2) },
-      default: { required },
+      name: { required, minLength: minLength(4) },
+      email: { required,email, minLength: minLength(2) },
+      password: { required,minLength: minLength(6) },
+      confirmpassword: {sameAsPassword: sameAs(computed(() => userObj.password))}
     };
-    const v$ = useVuelidate(rules, langObj);
+    const v$ = useVuelidate(rules, userObj);
 
     return {
-      props: computed(() => store.getters.getLanguageProps),
-      languageList: computed(() => store.getters.getLanguageList),
-      languageDoc: computed(() => store.getters.getlanguageTotalDoc),
+      props: computed(() => store.getters.getuserProps),
+      userList: computed(() => store.getters.getuserList),
+      userDoc: computed(() => store.getters.getuserTotalDoc),
       sortIcon,
       pageObj,
-      langObj,
+      userObj,
       v$,
       onShow: (item) => {
-        if (item == null) Object.assign(langObj, initObj);
-        else Object.assign(langObj, item);
+        if (item == null) Object.assign(userObj, initObj);
+        else Object.assign(userObj,item);
       },
       saveData,
       findData,
       deleteData,
       sortData,
       nextData,
-      prevData
+      prevData     
     };
   },
 };
