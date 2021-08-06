@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="onFind()"
+                @click="findData('getcategoryList')"
               >
                 Find
               </button>
@@ -38,9 +38,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('title')" /></th>
-          <th scope="col">Language<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('shortcode')" /></th>
-          <th scope="col">Icon<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('default')" /></th>
+          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getcategoryList')" /></th>
+          <th scope="col">Language<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getcategoryList')" /></th>
+          <th scope="col">Icon<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('default','getcategoryList')" /></th>
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -92,7 +92,7 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="onPrev()"
+                    @click="prevData('getcategoryList')"
                   />
                 </li>
                 <li class="page-item">
@@ -102,7 +102,7 @@
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="onNext()"
+                    @click="nextData(categoryDoc,'getcategoryList')"
                   />
                 </li>
               </ul>
@@ -189,7 +189,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="onSave()"
+              @click="`${categoryObj._id.length > 0 ? saveData(categoryObj,'putCategory') : saveData(categoryObj,'postCategory')}`"
             >
               Save
             </button>
@@ -232,7 +232,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="onDelete()"
+              @click="deleteData(categoryObj._id,'deleteCategory')"
             >
               Delete
             </button>
@@ -252,10 +252,8 @@ import useRepositories from "../../utility/repositories";
 
 export default {
   setup() {
-    const {sortIcon,pageObj,store} = useRepositories();
-    store.dispatch("getcategoryProps");
-    store.dispatch("getLanguageAll");
-    store.dispatch("getcategoryList", pageObj);
+    const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
+    = useRepositories('getcategoryList',['getcategoryProps','getLanguageAll']);
     const initObj = {
       _id: "",
       title: "",
@@ -288,38 +286,12 @@ export default {
           icon: item.icon
         });
       },
-      onSave: () => {
-        if (categoryObj._id.length > 0) {
-          store.dispatch("putCategory", categoryObj);
-        } else {
-          store.dispatch("postCategory", categoryObj);
-        }
-      },
-      onDelete: () => {
-        store.dispatch("deleteCategory", categoryObj._id);
-      },
-      onFind: () => {
-        pageObj.page = 1;
-        store.dispatch("getcategoryList", pageObj);
-      },
-      onPrev: () => {
-        if (pageObj.page > 1) {
-          pageObj.page = pageObj.page - 1;
-          store.dispatch("getcategoryList", pageObj);
-        }
-      },
-      onNext: () => {
-        if (pageObj.page < store.getters.getlanguageTotalDoc) {
-          pageObj.page = pageObj.page + 1;
-          store.dispatch("getcategoryList", pageObj);
-        }
-      },     
-      onSort: (prop) => {
-        pageObj.sortBy = prop;
-        pageObj.sortType = (pageObj.sortType == 'asc') ? 'desc' : 'asc';
-        sortIcon.value = (sortIcon.value == 'sort-down') ? 'sort-up' : 'sort-down';
-        store.dispatch("getcategoryList", pageObj);
-      }
+      saveData,
+      findData,
+      deleteData,
+      sortData,
+      nextData,
+      prevData     
     };
   },
 };

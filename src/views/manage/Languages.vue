@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="onFind()"
+                @click="findData('getLanguageList')"
               >
                 Find
               </button>
@@ -38,9 +38,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('title')" /></th>
-          <th scope="col">Short Code<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('shortcode')" /></th>
-          <th scope="col">Default<fa :icon="`${sortIcon}`" class="pointer" @click="onSort('default')" /></th>
+          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getLanguageList')" /></th>
+          <th scope="col">Short Code<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getLanguageList')" /></th>
+          <th scope="col">Default<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('default','getLanguageList')" /></th>
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -92,7 +92,7 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="onPrev()"
+                    @click="prevData('getLanguageList')"
                   />
                 </li>
                 <li class="page-item">
@@ -102,7 +102,7 @@
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="onNext()"
+                    @click="nextData(languageDoc,'getLanguageList')"
                   />
                 </li>
               </ul>
@@ -188,7 +188,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="onSave()"
+              @click="`${langObj._id.length > 0 ? saveData(langObj,'putLanguage') : saveData(langObj,'postLanguage')}`"
             >
               Save
             </button>
@@ -231,7 +231,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="onDelete()"
+              @click="deleteData(langObj._id,'deleteCategory')"
             >
               Delete
             </button>
@@ -251,9 +251,8 @@ import useRepositories from "../../utility/repositories";
 
 export default {
   setup() {
-    const {sortIcon,pageObj,store} = useRepositories();
-    store.dispatch("getLanguageProps");
-    store.dispatch("getLanguageList", pageObj);
+    const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
+    = useRepositories('getLanguageList',['getLanguageProps']);
     const initObj = {
       _id: "",
       title: "",
@@ -280,38 +279,12 @@ export default {
         if (item == null) Object.assign(langObj, initObj);
         else Object.assign(langObj, item);
       },
-      onSave: () => {
-        if (langObj._id.length > 0) {
-          store.dispatch("putLanguage", langObj);
-        } else {
-          store.dispatch("postLanguage", langObj);
-        }
-      },
-      onDelete: () => {
-        store.dispatch("deleteLanguage", langObj._id);
-      },
-      onFind: () => {
-        pageObj.page = 1;
-        store.dispatch("getLanguageList", pageObj);
-      },
-      onPrev: () => {
-        if (pageObj.page > 1) {
-          pageObj.page = pageObj.page - 1;
-          store.dispatch("getLanguageList", pageObj);
-        }
-      },
-      onNext: () => {
-        if (pageObj.page < store.getters.getlanguageTotalDoc) {
-          pageObj.page = pageObj.page + 1;
-          store.dispatch("getLanguageList", pageObj);
-        }
-      },
-      onSort: (prop) => {
-        pageObj.sortBy = prop;
-        pageObj.sortType = (pageObj.sortType == 'asc') ? 'desc' : 'asc';
-        sortIcon.value = (sortIcon.value == 'sort-down') ? 'sort-up' : 'sort-down';
-        store.dispatch("getLanguageList", pageObj);
-      }
+      saveData,
+      findData,
+      deleteData,
+      sortData,
+      nextData,
+      prevData
     };
   },
 };
