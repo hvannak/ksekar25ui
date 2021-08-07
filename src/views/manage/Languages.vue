@@ -232,7 +232,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(langObj._id,'deleteCategory')"
+              @click="deleteData(langObj._id,'deleteLanguage')"
             >
               Delete
             </button>

@@ -15,6 +15,16 @@ const getters = {
 };
 
 const actions = {
+  async getcategoryAll({ commit }) {
+    try {
+      const response = await axios.get(
+        `${apihelper.api_url}/category/all`);
+        commit('updatecategoryList',response.data);
+    } catch (err) {
+      commit('updatecategorymessage',err.response.data);
+    }
+  },
+
     async getcategoryList({ commit },pageObj) {
         try {
           const response = await axios.post(

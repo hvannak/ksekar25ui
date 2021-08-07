@@ -60,7 +60,7 @@ const actions = {
     try {
         const response = await axios.put(
         `${apihelper.api_url}/product/put/${productObj._id}`,productObj,apihelper.setToken());
-        commit('updateCategory', response.data.obj);
+        commit('updateProduct', response.data.obj);
         commit('updateproductmessage',response.data.message);
     } catch (err) {
         commit('updateproductmessage',err.response.data);

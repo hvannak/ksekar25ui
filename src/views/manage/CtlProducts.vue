@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="findData('getcategoryList')"
+                @click="findData('getproductList')"
               >
                 Find
               </button>
@@ -38,9 +38,11 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getcategoryList')" /></th>
-          <th scope="col">Language<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getcategoryList')" /></th>
-          <th scope="col">Icon<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('default','getcategoryList')" /></th>
+          <th scope="col">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getproductList')" /></th>
+          <th scope="col">Category<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getproductList')" /></th>
+          <th scope="col">Description<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('description','getproductList')" /></th>
+          <th scope="col">Price<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('price','getproductList')" /></th>
+          <th scope="col">Currency<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('currency','getproductList')" /></th>
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -59,11 +61,13 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in categoryList" :key="index">
+        <tr v-for="(item, index) in productList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
           <td>{{ item.category.title }}</td>
           <td>{{ item.description }}</td>
+          <td>{{ item.price }}</td>
+          <td>{{ item.currency.symbol }}</td>
           <td>
             <fa
               icon="edit"
@@ -92,7 +96,7 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="prevData('getcategoryList')"
+                    @click="prevData('getproductList')"
                   />
                 </li>
                 <li class="page-item">
@@ -102,7 +106,7 @@
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="nextData(productDoc,'getcategoryList')"
+                    @click="nextData(productDoc,'getproductList')"
                   />
                 </li>
               </ul>
@@ -125,7 +129,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="neweditModalLabel">
-              Category Input
+              Product Input
             </h5>
             <button
               type="button"
@@ -149,7 +153,21 @@
               </div>
               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Icon</div>
+                  <div class="input-group-text">Category</div>
+                  <select v-model="productObj.category" class="form-select py-2">
+                    <option selected value="0">Open this select</option>
+                    <option v-for="item in categoryList" :key="item" :value="`${item._id}`">{{
+                      item.title
+                    }}</option>
+                  </select>
+                </div>
+                <div v-if="v$.category.$invalid">
+                  Value is required
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">Description</div>
                   <input
                     type="text"
                     class="form-control"
@@ -157,20 +175,48 @@
                   />
                 </div>
                 <div v-if="v$.description.$invalid">
-                  Value is required 2 digits
+                  Value is required 10 digits
                 </div>
               </div>
-              <div class="col-12">
+               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Language</div>
-                  <select v-model="productObj.category" class="form-select py-2">
+                  <div class="input-group-text">Price</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="productObj.price"
+                  />
+                </div>
+                <div v-if="v$.price.$invalid">
+                  Value is required 1 digits
+                </div>
+              </div>
+             <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">Currency</div>
+                  <select v-model="productObj.currency" class="form-select py-2">
                     <option selected value="0">Open this select</option>
-                    <option v-for="item in categoryuageList" :key="item" :value="`${item._id}`">{{
+                    <option v-for="item in currencyList" :key="item" :value="`${item._id}`">{{
                       item.title
                     }}</option>
                   </select>
                 </div>
-                <div v-if="v$.category.$invalid">
+                <div v-if="v$.currency.$invalid">
+                  Value is required
+                </div>
+              </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">
+                    <fa icon="file" />
+                  </div>
+                  <input
+                    type="file"
+                    class="form-control"
+                    @change="fileData($event)"
+                  />
+                </div>
+                <div v-if="v$.image.$invalid">
                   Value is required
                 </div>
               </div>
@@ -190,7 +236,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               :disabled="v$.$invalid"
-              @click="`${productObj._id.length > 0 ? saveData(productObj,'putCategory') : saveData(productObj,'postCategory')}`"
+              @click="`${productObj._id.length > 0 ? saveData(productObj,'putProduct') : saveData(productObj,'postProduct')}`"
             >
               Save
             </button>
@@ -233,7 +279,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(productObj._id,'deleteCategory')"
+              @click="deleteData(productObj._id,'deleteProduct')"
             >
               Delete
             </button>
@@ -254,14 +300,14 @@ import useRepositories from "../../utility/repositories";
 export default {
   setup() {
     const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
-    = useRepositories('getproductList',['getproductProps','getLanguageAll']);
+    = useRepositories('getproductList',['getproductProps','getcategoryAll','getcurrencyAll']);
     const initObj = {
       _id: "",
       title: "",
       category: "0",
       description: "",
       price: "",
-      currency: "",
+      currency: "0",
       image: ""
     };
     let productObj = reactive({ initObj });
@@ -274,11 +320,20 @@ export default {
       image: { required },
     };
     const v$ = useVuelidate(rules, productObj);
+    const fileData = (event) => {
+      const files = event.target.files
+      const reader = new FileReader()
+      reader.onload = function(e) {
+        productObj.image = e.target.result;
+      }.bind(this);
+      reader.readAsDataURL(files[0])
+    }
 
     return {
       props: computed(() => store.getters.getproductProps),
       productList: computed(() => store.getters.getproductList),
-      categoryuageList: computed(() => store.getters.getLanguageList),
+      categoryList: computed(() => store.getters.getcategoryList),
+      currencyList: computed(() => store.getters.getcurrencyList),
       productDoc: computed(() => store.getters.getproductTotalDoc),
       sortIcon,
       pageObj,
@@ -290,7 +345,9 @@ export default {
           _id: item._id,
           title: item.title,
           category: item.category._id,
-          description: item.description
+          description: item.description,
+          price: item.price,
+          currency: item.currency,
         });
       },
       saveData,
@@ -298,7 +355,8 @@ export default {
       deleteData,
       sortData,
       nextData,
-      prevData     
+      prevData,
+      fileData     
     };
   },
 };
