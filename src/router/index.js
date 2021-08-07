@@ -9,6 +9,7 @@ import Localize from '../views/manage/Localize.vue'
 import ControlProducts from '../views/manage/CtlProducts.vue'
 import ControlPosts from '../views/manage/CtlPosts.vue'
 import Category from '../views/manage/Category.vue'
+import Currency from '../views/manage/Currency.vue'
 import Users from '../views/manage/Users.vue'
 
 const routes = [
@@ -49,6 +50,12 @@ const routes = [
         name: 'Category',
         meta: { title: 'Category',group:'setting' },
         component: Category
+      },
+      {
+        path: 'currency',
+        name: 'Currency',
+        meta: { title: 'Currency',group:'setting' },
+        component: Currency
       },
       {
         path: 'localize',
