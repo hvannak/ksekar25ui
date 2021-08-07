@@ -38,9 +38,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getcategoryList')" /></th>
-          <th scope="col">Language<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getcategoryList')" /></th>
-          <th scope="col">Icon<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('default','getcategoryList')" /></th>
+          <th scope="col">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getcategoryList')" /></th>
+          <th scope="col">Language<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getcategoryList')" /></th>
+          <th scope="col">Icon<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('default','getcategoryList')" /></th>
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -62,8 +62,8 @@
         <tr v-for="(item, index) in categoryList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
-          <td>{{ item.lang.title }}</td>
-          <td>{{ item.icon }}</td>
+          <td>{{ item.category.title }}</td>
+          <td>{{ item.description }}</td>
           <td>
             <fa
               icon="edit"
@@ -96,13 +96,13 @@
                   />
                 </li>
                 <li class="page-item">
-                  {{ pageObj.page }} Of {{ categoryDoc }}
+                  {{ pageObj.page }} Of {{ productDoc }}
                 </li>
                 <li class="page-item">
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="nextData(categoryDoc,'getcategoryList')"
+                    @click="nextData(productDoc,'getcategoryList')"
                   />
                 </li>
               </ul>
@@ -142,7 +142,7 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="categoryObj.title"
+                    v-model="productObj.title"
                   />
                 </div>
                 <div v-if="v$.title.$invalid">Value is required 4 digits</div>
@@ -153,24 +153,24 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="categoryObj.icon"
+                    v-model="productObj.description"
                   />
                 </div>
-                <div v-if="v$.icon.$invalid">
+                <div v-if="v$.description.$invalid">
                   Value is required 2 digits
                 </div>
               </div>
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">Language</div>
-                  <select v-model="categoryObj.lang" class="form-select py-2">
+                  <select v-model="productObj.category" class="form-select py-2">
                     <option selected value="0">Open this select</option>
-                    <option v-for="item in languageList" :key="item" :value="`${item._id}`">{{
+                    <option v-for="item in categoryuageList" :key="item" :value="`${item._id}`">{{
                       item.title
                     }}</option>
                   </select>
                 </div>
-                <div v-if="v$.lang.$invalid">
+                <div v-if="v$.category.$invalid">
                   Value is required
                 </div>
               </div>
@@ -190,7 +190,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               :disabled="v$.$invalid"
-              @click="`${categoryObj._id.length > 0 ? saveData(categoryObj,'putCategory') : saveData(categoryObj,'postCategory')}`"
+              @click="`${productObj._id.length > 0 ? saveData(productObj,'putCategory') : saveData(productObj,'postCategory')}`"
             >
               Save
             </button>
@@ -233,7 +233,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(categoryObj._id,'deleteCategory')"
+              @click="deleteData(productObj._id,'deleteCategory')"
             >
               Delete
             </button>
@@ -254,37 +254,43 @@ import useRepositories from "../../utility/repositories";
 export default {
   setup() {
     const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
-    = useRepositories('getcategoryList',['getcategoryProps','getLanguageAll']);
+    = useRepositories('getproductList',['getproductProps','getLanguageAll']);
     const initObj = {
       _id: "",
       title: "",
-      lang: "0",
-      icon: "",
+      category: "0",
+      description: "",
+      price: "",
+      currency: "",
+      image: ""
     };
-    let categoryObj = reactive({ initObj });
+    let productObj = reactive({ initObj });
     const rules = {
       title: { required, minLength: minLength(4) },
-      lang: { required, minLength: minLength(2) },
-      icon: { required },
+      category: { required, minLength: minLength(2) },
+      description: { required, minLength: minLength(10) },
+      price: { required, minLength: minLength(1) },
+      currency: { required },
+      image: { required },
     };
-    const v$ = useVuelidate(rules, categoryObj);
+    const v$ = useVuelidate(rules, productObj);
 
     return {
-      props: computed(() => store.getters.getcategoryProps),
-      categoryList: computed(() => store.getters.getcategoryList),
-      languageList: computed(() => store.getters.getLanguageList),
-      categoryDoc: computed(() => store.getters.getcategoryTotalDoc),
+      props: computed(() => store.getters.getproductProps),
+      productList: computed(() => store.getters.getproductList),
+      categoryuageList: computed(() => store.getters.getLanguageList),
+      productDoc: computed(() => store.getters.getproductTotalDoc),
       sortIcon,
       pageObj,
-      categoryObj,
+      productObj,
       v$,
       onShow: (item) => {
-        if (item == null) Object.assign(categoryObj, initObj);
-        else Object.assign(categoryObj, {
+        if (item == null) Object.assign(productObj, initObj);
+        else Object.assign(productObj, {
           _id: item._id,
           title: item.title,
-          lang: item.lang._id,
-          icon: item.icon
+          category: item.category._id,
+          description: item.description
         });
       },
       saveData,
