@@ -5,22 +5,26 @@ const state = {
   productList: [],
   productProps:[],
   productmessage:'',
-  productTotalDoc: 0
+  productTotalDoc: 0,
+  productWaiting: false
 };
 
 const getters = {
   getproductProps: state => state.productProps,
   getproductList: state => state.productList,
-  getproductTotalDoc: state => state.productTotalDoc
+  getproductTotalDoc: state => state.productTotalDoc,
+  getproductWaiting: state => state.productWaiting
 };
 
 const actions = {
     async getproductList({ commit },pageObj) {
         try {
+          commit('updatewaiting',true);
           const response = await axios.post(
             `${apihelper.api_url}/product/page`,pageObj,apihelper.setToken());
             commit('updateproductList',response.data.objList);
             commit('updateproductDoc',response.data.totalDoc);
+            commit('updatewaiting',false);
         } catch (err) {
           commit('updateproductmessage',err.response.data);
         }
@@ -82,7 +86,8 @@ const mutations = {
         if (index !== -1) {
           state.productList.splice(index, 1, catObj);
         }
-    }
+    },
+    updatewaiting: (state,val) => state.productWaiting = val
 };
 
 export default {

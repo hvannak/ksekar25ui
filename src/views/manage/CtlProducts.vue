@@ -34,16 +34,21 @@
         </div>
       </div>
     </div>
+    <div v-if="productWaiting" class="d-flex justify-content-center">
+      <div class="spinner-border" role="status">
+        <span class="visually-hidden">Loading...</span>
+      </div>
+    </div>
     <table class="table table-striped">
       <thead>
         <tr>
-          <th scope="col">#</th>
-          <th scope="col">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getproductList')" /></th>
-          <th scope="col">Category<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getproductList')" /></th>
-          <th scope="col">Description<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('description','getproductList')" /></th>
-          <th scope="col">Price<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('price','getproductList')" /></th>
-          <th scope="col">Currency<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('currency','getproductList')" /></th>
-          <th scope="col">
+          <th scope="col" style="width: 1vw;">#</th>
+          <th scope="col" style="width: 7vw;">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getproductList')" /></th>
+          <th scope="col" style="width: 7vw;">Category<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getproductList')" /></th>
+          <th scope="col" style="width: 65vw;">Description<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('description','getproductList')" /></th>
+          <th scope="col" style="width: 7vw;">Price<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('price','getproductList')" /></th>
+          <th scope="col" style="width: 7vw;">Currency<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('currency','getproductList')" /></th>
+          <th scope="col" style="width: 7vw;">
             <div
               class="col-auto text-center"
               data-bs-toggle="modal"
@@ -65,7 +70,7 @@
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
           <td>{{ item.category.title }}</td>
-          <td>{{ item.description }}</td>
+          <td><div class="wraptext">{{ item.description }}</div></td>
           <td>{{ item.price }}</td>
           <td>{{ item.currency.symbol }}</td>
           <td>
@@ -168,8 +173,7 @@
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">Description</div>
-                  <input
-                    type="text"
+                  <textarea 
                     class="form-control"
                     v-model="productObj.description"
                   />
@@ -335,6 +339,7 @@ export default {
       categoryList: computed(() => store.getters.getcategoryList),
       currencyList: computed(() => store.getters.getcurrencyList),
       productDoc: computed(() => store.getters.getproductTotalDoc),
+      productWaiting: computed(() => store.getters.getproductWaiting),
       sortIcon,
       pageObj,
       productObj,
@@ -347,7 +352,7 @@ export default {
           category: item.category._id,
           description: item.description,
           price: item.price,
-          currency: item.currency,
+          currency: item.currency._id,
         });
       },
       saveData,
@@ -362,4 +367,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  .wraptext {
+    height: 20px;
+    overflow: hidden;
+  }
+</style>
