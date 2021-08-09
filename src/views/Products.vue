@@ -5,18 +5,22 @@
         <div class="card p-3">
           <form class="row row-cols-lg-auto g-3 align-items-center">
             <div class="col-12">
-              <select class="form-select" id="inlineFormSelectPref">
-                <option selected>Choose...</option>
-                <option value="1">One</option>
-                <option value="2">Two</option>
-                <option value="3">Three</option>
-              </select>
-            </div>
+                <div class="input-group">
+                  <div class="input-group-text">Category</div>
+                  <select v-model="searchObj.category" class="form-select py-2">
+                    <option selected value="0">All</option>
+                    <option v-for="item in categoryList" :key="item" :value="`${item._id}`">{{
+                      item.title
+                    }}</option>
+                  </select>
+                </div>
+              </div>
 
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">Name</div>
+                <div class="input-group-text">Title</div>
                 <input
+                  v-model="searchObj.title"
                   type="text"
                   class="form-control"
                   id="inlineFormInputGroupUsername"
@@ -28,6 +32,7 @@
               <div class="input-group">
                 <div class="input-group-text">Description</div>
                 <input
+                  v-model="searchObj.description"
                   type="text"
                   class="form-control"
                   id="inlineFormInputGroupUsername"
@@ -39,6 +44,7 @@
               <div class="input-group">
                 <div class="input-group-text">From Price</div>
                 <input
+                  v-model="searchObj.fromprice"
                   type="text"
                   class="form-control"
                   id="inlineFormInputGroupUsername"
@@ -50,16 +56,28 @@
               <div class="input-group">
                 <div class="input-group-text">To Price</div>
                 <input
+                  v-model="searchObj.toprice"
                   type="text"
                   class="form-control"
                   id="inlineFormInputGroupUsername"
                 />
               </div>
             </div>
+            <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">Currency</div>
+                  <select v-model="searchObj.currency" class="form-select py-2">
+                    <option selected value="0">Open this select</option>
+                    <option v-for="item in currencyList" :key="item" :value="`${item._id}`">{{
+                      item.symbol
+                    }}</option>
+                  </select>
+                </div>
+              </div>
 
             <div class="col-12">
               <div class="d-grid gap-2">
-                <button class="btn btn-primary" type="button">Search</button>
+                <button class="btn btn-primary" type="button" @click="findData('getproductSearchList')">Search</button>
               </div>
             </div>
           </form>
@@ -97,12 +115,27 @@
 </template>
 
 <script>
+import { computed } from "vue";
+import useRepositories from "../utility/uirepositories";
+
 export default {
-    data () {
-      return {
-        
-      }
-    },
+   setup() {
+     const {store,findData,nextData,prevData} 
+    = useRepositories(['getproductProps','getcategoryAll','getcurrencyAll']);
+    const searchObj = {
+        pageSize: 2,
+        page: 1
+    };
+    return {
+      productList: computed(() => store.getters.getproductList),
+      categoryList: computed(() => store.getters.getcategoryList),
+      currencyList: computed(() => store.getters.getcurrencyList),
+     searchObj,
+     findData,
+     nextData,
+     prevData
+    }
+   }
 };
 </script>
 

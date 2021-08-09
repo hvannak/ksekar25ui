@@ -17,6 +17,20 @@ const getters = {
 };
 
 const actions = {
+  async getproductSearchList({ commit },searchObj) {
+    try {
+      commit('updatewaiting',true);
+      const response = await axios.post(
+        `${apihelper.api_url}/product/search`,searchObj,apihelper.setToken());
+        console.log(response.data.objList);
+        commit('updateproductList',response.data.objList);
+        commit('updateproductDoc',response.data.totalDoc);
+        commit('updatewaiting',false);
+    } catch (err) {
+      commit('updateproductmessage',err.response.data);
+    }
+  },
+
     async getproductList({ commit },pageObj) {
         try {
           commit('updatewaiting',true);
