@@ -195,6 +195,19 @@
                   Value is required 1 digits
                 </div>
               </div>
+              <div class="col-12">
+                <div class="input-group">
+                  <div class="input-group-text">Actual Price</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    v-model="productObj.actualprice"
+                  />
+                </div>
+                <div v-if="v$.actualprice.$invalid">
+                  Value is required 1 digits
+                </div>
+              </div>
              <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">Currency</div>
@@ -212,7 +225,7 @@
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">
-                    <fa icon="file" />
+                    <fa icon="file" /> | 350x350
                   </div>
                   <input
                     type="file"
@@ -220,9 +233,9 @@
                     @change="fileData($event)"
                   />
                 </div>
-                <div v-if="v$.image.$invalid">
+                <!-- <div v-if="v$.image.$invalid">
                   Value is required
-                </div>
+                </div> -->
               </div>
 
             </form>
@@ -311,6 +324,7 @@ export default {
       category: "0",
       description: "",
       price: "",
+      actualprice:"0",
       currency: "0",
       image: ""
     };
@@ -320,8 +334,9 @@ export default {
       category: { required, minLength: minLength(2) },
       description: { required, minLength: minLength(10) },
       price: { required, minLength: minLength(1) },
+      actualprice: { required, minLength: minLength(1) },
       currency: { required },
-      image: { required },
+      image: {  },
     };
     const v$ = useVuelidate(rules, productObj);
     const fileData = (event) => {
@@ -345,6 +360,7 @@ export default {
       productObj,
       v$,
       onShow: (item) => {
+        console.log(item);
         if (item == null) Object.assign(productObj, initObj);
         else Object.assign(productObj, {
           _id: item._id,
@@ -352,6 +368,7 @@ export default {
           category: item.category._id,
           description: item.description,
           price: item.price,
+          actualprice: item.actualprice,
           currency: item.currency._id,
         });
       },

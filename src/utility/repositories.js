@@ -5,7 +5,7 @@ export default function useRepositories(initaction,actions) {
     const store = useStore();
     const sortIcon = ref('sort-up');
     const pageObj = {
-        pageSize: 2,
+        pageSize: 30,
         page: 1,
         sortBy: "_id",
         sortType: "asc",
