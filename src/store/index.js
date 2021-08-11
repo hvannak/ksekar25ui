@@ -5,6 +5,7 @@ import Category from './modules/category'
 import Currency from './modules/currency'
 import Product from './modules/product'
 import Notification from './modules/notification'
+import Post from './modules/post'
 
 export default createStore({
   modules: {
@@ -13,6 +14,7 @@ export default createStore({
     Category,
     Product,
     Currency,
-    Notification
+    Notification,
+    Post
   }
 })

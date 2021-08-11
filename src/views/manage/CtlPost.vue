@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="findData('getproductList')"
+                @click="findData('getpostList')"
               >
                 Find
               </button>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </div>
-    <div v-if="productWaiting" class="d-flex justify-content-center">
+    <div v-if="postWaiting" class="d-flex justify-content-center">
       <div class="spinner-border" role="status">
         <span class="visually-hidden">Loading...</span>
       </div>
@@ -43,11 +43,9 @@
       <thead>
         <tr>
           <th scope="col" style="width: 1vw;">#</th>
-          <th scope="col" style="width: 7vw;">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getproductList')" /></th>
-          <th scope="col" style="width: 7vw;">Category<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('shortcode','getproductList')" /></th>
-          <th scope="col" style="width: 65vw;">Description<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('description','getproductList')" /></th>
-          <th scope="col" style="width: 7vw;">Price<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('price','getproductList')" /></th>
-          <th scope="col" style="width: 7vw;">Currency<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('currency','getproductList')" /></th>
+          <th scope="col" style="width: 7vw;">Title<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('title','getpostList')" /></th>
+          <th scope="col" style="width: 7vw;">Language<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('lang','getpostList')" /></th>
+          <th scope="col" style="width: 65vw;">Description<fa :icon ="`${sortIcon}`" class="pointer" @click="sortData('description','getpostList')" /></th>
           <th scope="col" style="width: 7vw;">
             <div
               class="col-auto text-center"
@@ -66,13 +64,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in productList" :key="index">
+        <tr v-for="(item, index) in postList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
-          <td>{{ item.category.title }}</td>
+          <td>{{ item.lang.title }}</td>
           <td><div class="wraptext">{{ item.description }}</div></td>
-          <td>{{ item.price }}</td>
-          <td>{{ item.currency.symbol }}</td>
           <td>
             <fa
               icon="edit"
@@ -101,17 +97,17 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="prevData('getproductList')"
+                    @click="prevData('getpostList')"
                   />
                 </li>
                 <li class="page-item">
-                  {{ pageObj.page }} Of {{ productDoc }}
+                  {{ pageObj.page }} Of {{ postDoc }}
                 </li>
                 <li class="page-item">
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="nextData(productDoc,'getproductList')"
+                    @click="nextData(postDoc,'getpostList')"
                   />
                 </li>
               </ul>
@@ -134,7 +130,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="neweditModalLabel">
-              Product Input
+              Post Input
             </h5>
             <button
               type="button"
@@ -151,22 +147,22 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="productObj.title"
+                    v-model="postObj.title"
                   />
                 </div>
                 <div v-if="v$.title.$invalid">Value is required 4 digits</div>
               </div>
               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Category</div>
-                  <select v-model="productObj.category" class="form-select py-2">
+                  <div class="input-group-text">Language</div>
+                  <select v-model="postObj.lang" class="form-select py-2">
                     <option selected value="0">Open this select</option>
-                    <option v-for="item in categoryList" :key="item" :value="`${item._id}`">{{
+                    <option v-for="item in languageList" :key="item" :value="`${item._id}`">{{
                       item.title
                     }}</option>
                   </select>
                 </div>
-                <div v-if="v$.category.$invalid">
+                <div v-if="v$.lang.$invalid">
                   Value is required
                 </div>
               </div>
@@ -175,57 +171,17 @@
                   <div class="input-group-text">Description</div>
                   <textarea 
                     class="form-control"
-                    v-model="productObj.description"
+                    v-model="postObj.description"
                   />
                 </div>
                 <div v-if="v$.description.$invalid">
                   Value is required 10 digits
                 </div>
               </div>
-               <div class="col-12">
-                <div class="input-group">
-                  <div class="input-group-text">Price</div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="productObj.price"
-                  />
-                </div>
-                <div v-if="v$.price.$invalid">
-                  Value is required 1 digits
-                </div>
-              </div>
-              <div class="col-12">
-                <div class="input-group">
-                  <div class="input-group-text">Actual Price</div>
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="productObj.actualprice"
-                  />
-                </div>
-                <div v-if="v$.actualprice.$invalid">
-                  Value is required 1 digits
-                </div>
-              </div>
-             <div class="col-12">
-                <div class="input-group">
-                  <div class="input-group-text">Currency</div>
-                  <select v-model="productObj.currency" class="form-select py-2">
-                    <option selected value="0">Open this select</option>
-                    <option v-for="item in currencyList" :key="item" :value="`${item._id}`">{{
-                      item.title
-                    }}</option>
-                  </select>
-                </div>
-                <div v-if="v$.currency.$invalid">
-                  Value is required
-                </div>
-              </div>
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">
-                    <fa icon="file" /> | 350x350
+                    <fa icon="file" /> | 450x450
                   </div>
                   <input
                     type="file"
@@ -253,7 +209,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               :disabled="v$.$invalid"
-              @click="`${productObj._id.length > 0 ? saveData(productObj,'putProduct') : saveData(productObj,'postProduct')}`"
+              @click="`${postObj._id.length > 0 ? saveData(postObj,'putPost') : saveData(postObj,'postPost')}`"
             >
               Save
             </button>
@@ -273,7 +229,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Product Delete</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Post Delete</h5>
             <button
               type="button"
               class="btn-close"
@@ -296,7 +252,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(productObj._id,'deleteProduct')"
+              @click="deleteData(postObj._id,'deleteProduct')"
             >
               Delete
             </button>
@@ -317,59 +273,48 @@ import useRepositories from "../../utility/repositories";
 export default {
   setup() {
     const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
-    = useRepositories('getproductList',['getproductProps','getcategoryAll','getcurrencyAll']);
+    = useRepositories('getpostList',['getpostProps','getLanguageAll']);
     const initObj = {
       _id: "",
       title: "",
-      category: "0",
+      lang: "0",
       description: "",
-      price: "",
-      actualprice:"0",
-      currency: "0",
       image: ""
     };
-    let productObj = reactive({ initObj });
+    let postObj = reactive({ initObj });
     const rules = {
       title: { required, minLength: minLength(4) },
-      category: { required, minLength: minLength(2) },
+      lang: { required, minLength: minLength(2) },
       description: { required, minLength: minLength(10) },
-      price: { required, minLength: minLength(1) },
-      actualprice: { required, minLength: minLength(1) },
-      currency: { required },
       image: {  },
     };
-    const v$ = useVuelidate(rules, productObj);
+    const v$ = useVuelidate(rules, postObj);
     const fileData = (event) => {
       const files = event.target.files
       const reader = new FileReader()
       reader.onload = function(e) {
-        productObj.image = e.target.result;
+        postObj.image = e.target.result;
       }.bind(this);
       reader.readAsDataURL(files[0])
     }
 
     return {
-      props: computed(() => store.getters.getproductProps),
-      productList: computed(() => store.getters.getproductList),
-      categoryList: computed(() => store.getters.getcategoryList),
-      currencyList: computed(() => store.getters.getcurrencyList),
-      productDoc: computed(() => store.getters.getproductTotalDoc),
-      productWaiting: computed(() => store.getters.getproductWaiting),
+      props: computed(() => store.getters.getpostProps),
+      postList: computed(() => store.getters.getpostList),
+      languageList: computed(() => store.getters.getLanguageList),
+      postDoc: computed(() => store.getters.getpostTotalDoc),
+      postWaiting: computed(() => store.getters.getpostWaiting),
       sortIcon,
       pageObj,
-      productObj,
+      postObj,
       v$,
       onShow: (item) => {
-        console.log(item);
-        if (item == null) Object.assign(productObj, initObj);
-        else Object.assign(productObj, {
+        if (item == null) Object.assign(postObj, initObj);
+        else Object.assign(postObj, {
           _id: item._id,
           title: item.title,
-          category: item.category._id,
-          description: item.description,
-          price: item.price,
-          actualprice: item.actualprice,
-          currency: item.currency._id,
+          lang: item.lang._id,
+          description: item.description
         });
       },
       saveData,

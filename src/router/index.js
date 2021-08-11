@@ -7,7 +7,7 @@ import ControlPanel from '../views/ControlPanel.vue'
 import Languages from '../views/manage/Languages.vue'
 import Localize from '../views/manage/Localize.vue'
 import ControlProducts from '../views/manage/CtlProducts.vue'
-import ControlPosts from '../views/manage/CtlPosts.vue'
+import ControlPost from '../views/manage/CtlPost.vue'
 import Category from '../views/manage/Category.vue'
 import Currency from '../views/manage/Currency.vue'
 import Users from '../views/manage/Users.vue'
@@ -74,7 +74,7 @@ const routes = [
         path: 'ctlposts',
         name: 'CtlPosts',
         meta: { title: 'Posts',group:'workarea'},
-        component: ControlPosts
+        component: ControlPost
       },
       {
         path: 'ctlnotification',

@@ -22,7 +22,6 @@ const actions = {
       commit('updatewaiting',true);
       const response = await axios.post(
         `${apihelper.api_url}/product/search`,searchObj,apihelper.setToken());
-        console.log(response.data.objList);
         commit('updateproductList',response.data.objList);
         commit('updateproductDoc',response.data.totalDoc);
         commit('updatewaiting',false);
