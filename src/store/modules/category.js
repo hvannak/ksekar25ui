@@ -29,6 +29,7 @@ const actions = {
         try {
           const response = await axios.post(
             `${apihelper.api_url}/category/page`,pageObj,apihelper.setToken());
+            console.log(response.data.objList);
             commit('updatecategoryList',response.data.objList);
             commit('updatecategoryDoc',response.data.totalDoc);
         } catch (err) {

@@ -4,6 +4,7 @@ import Language from './modules/languages'
 import Category from './modules/category'
 import Currency from './modules/currency'
 import Product from './modules/product'
+import Notification from './modules/notification'
 
 export default createStore({
   modules: {
@@ -11,6 +12,7 @@ export default createStore({
     Language,
     Category,
     Product,
-    Currency
+    Currency,
+    Notification
   }
 })

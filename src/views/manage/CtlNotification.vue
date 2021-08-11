@@ -25,7 +25,7 @@
               <button
                 type="button"
                 class="btn btn-primary mb-3"
-                @click="findData('getcategoryList')"
+                @click="findData('getnotificationList')"
               >
                 Find
               </button>
@@ -38,9 +38,9 @@
       <thead>
         <tr>
           <th scope="col">#</th>
-          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getcategoryList')" /></th>
-          <th scope="col">Language<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('language','getcategoryList')" /></th>
-          <th scope="col">Icon<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('icon','getcategoryList')" /></th>
+          <th scope="col">Title<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('title','getnotificationList')" /></th>
+          <th scope="col">Language<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('language','getnotificationList')" /></th>
+          <th scope="col">Description<fa :icon="`${sortIcon}`" class="pointer" @click="sortData('description','getnotificationList')" /></th>
           <th scope="col">
             <div
               class="col-auto text-center"
@@ -59,11 +59,11 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="(item, index) in categoryList" :key="index">
+        <tr v-for="(item, index) in notificationList" :key="index">
           <th scope="row">{{ index + 1 }}</th>
           <td>{{ item.title }}</td>
           <td>{{ item.lang.title }}</td>
-          <td>{{ item.icon }}</td>
+          <td><div class="wraptext">{{ item.description }}</div></td>
           <td>
             <fa
               icon="edit"
@@ -92,17 +92,17 @@
                   <fa
                     icon="arrow-circle-left"
                     class="fa-2x pointer"
-                    @click="prevData('getcategoryList')"
+                    @click="prevData('getnotificationList')"
                   />
                 </li>
                 <li class="page-item">
-                  {{ pageObj.page }} Of {{ categoryDoc }}
+                  {{ pageObj.page }} Of {{ notificationDoc }}
                 </li>
                 <li class="page-item">
                   <fa
                     icon="arrow-circle-right"
                     class="fa-2x pointer"
-                    @click="nextData(categoryDoc,'getcategoryList')"
+                    @click="nextData(notificationDoc,'getnotificationList')"
                   />
                 </li>
               </ul>
@@ -125,7 +125,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="neweditModalLabel">
-              Category Input
+              Notification Input
             </h5>
             <button
               type="button"
@@ -142,28 +142,27 @@
                   <input
                     type="text"
                     class="form-control"
-                    v-model="categoryObj.title"
+                    v-model="notificationObj.title"
                   />
                 </div>
                 <div v-if="v$.title.$invalid">Value is required 4 digits</div>
               </div>
               <div class="col-12">
                 <div class="input-group">
-                  <div class="input-group-text">Icon</div>
-                  <input
-                    type="text"
+                  <div class="input-group-text">Description</div>
+                  <textarea
                     class="form-control"
-                    v-model="categoryObj.icon"
+                    v-model="notificationObj.description"
                   />
                 </div>
-                <div v-if="v$.icon.$invalid">
+                <div v-if="v$.description.$invalid">
                   Value is required 2 digits
                 </div>
               </div>
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">Language</div>
-                  <select v-model="categoryObj.lang" class="form-select py-2">
+                  <select v-model="notificationObj.lang" class="form-select py-2">
                     <option selected value="0">Open this select</option>
                     <option v-for="item in languageList" :key="item" :value="`${item._id}`">{{
                       item.title
@@ -190,7 +189,7 @@
               class="btn btn-primary"
               data-bs-dismiss="modal"
               :disabled="v$.$invalid"
-              @click="`${categoryObj._id.length > 0 ? saveData(categoryObj,'putCategory') : saveData(categoryObj,'postCategory')}`"
+              @click="`${notificationObj._id.length > 0 ? saveData(notificationObj,'putNotification') : saveData(notificationObj,'postNotification')}`"
             >
               Save
             </button>
@@ -210,7 +209,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Category Delete</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Notification Delete</h5>
             <button
               type="button"
               class="btn-close"
@@ -233,7 +232,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(categoryObj._id,'deleteCategory')"
+              @click="deleteData(notificationObj._id,'deleteNotification')"
             >
               Delete
             </button>
@@ -254,37 +253,37 @@ import useRepositories from "../../utility/repositories";
 export default {
   setup() {
     const {sortIcon,pageObj,store,sortData,deleteData,findData,nextData,prevData,saveData} 
-    = useRepositories('getcategoryList',['getcategoryProps','getLanguageAll']);
+    = useRepositories('getnotificationList',['getnotificationProps','getLanguageAll']);
     const initObj = {
       _id: "",
       title: "",
       lang: "0",
-      icon: "",
+      description: "",
     };
-    let categoryObj = reactive({ initObj });
+    let notificationObj = reactive({ initObj });
     const rules = {
       title: { required, minLength: minLength(4) },
       lang: { required, minLength: minLength(2) },
-      icon: { required },
+      description: { required },
     };
-    const v$ = useVuelidate(rules, categoryObj);
+    const v$ = useVuelidate(rules, notificationObj);
 
     return {
-      props: computed(() => store.getters.getcategoryProps),
-      categoryList: computed(() => store.getters.getcategoryList),
+      props: computed(() => store.getters.getnotificationProps),
+      notificationList: computed(() => store.getters.getnotificationList),
       languageList: computed(() => store.getters.getLanguageList),
-      categoryDoc: computed(() => store.getters.getcategoryTotalDoc),
+      notificationDoc: computed(() => store.getters.getnotificationTotalDoc),
       sortIcon,
       pageObj,
-      categoryObj,
+      notificationObj,
       v$,
       onShow: (item) => {
-        if (item == null) Object.assign(categoryObj, initObj);
-        else Object.assign(categoryObj, {
+        if (item == null) Object.assign(notificationObj, initObj);
+        else Object.assign(notificationObj, {
           _id: item._id,
           title: item.title,
           lang: item.lang._id,
-          icon: item.icon
+          description: item.description
         });
       },
       saveData,
@@ -298,4 +297,9 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+  .wraptext {
+    height: 20px;
+    overflow: hidden;
+  }
+</style>

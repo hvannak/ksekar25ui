@@ -11,6 +11,7 @@ import ControlPosts from '../views/manage/CtlPosts.vue'
 import Category from '../views/manage/Category.vue'
 import Currency from '../views/manage/Currency.vue'
 import Users from '../views/manage/Users.vue'
+import ControlNotification from '../views/manage/CtlNotification.vue'
 
 const routes = [
   {
@@ -74,6 +75,12 @@ const routes = [
         name: 'CtlPosts',
         meta: { title: 'Posts',group:'workarea'},
         component: ControlPosts
+      },
+      {
+        path: 'ctlnotification',
+        name: 'CtlNotification',
+        meta: { title: 'Notification',group:'workarea'},
+        component: ControlNotification
       },
       {
         path: 'users',

@@ -123,7 +123,7 @@
                   <div class="card-footer">
                     <small class="text-muted"
                       >Last updated
-                      {{ item.date.replace(/T/, " ").replace(/\..+/, "") }}</small
+                      {{ item.date.substring(0,10) }}</small
                     >
                   </div>
                 </div>
@@ -175,7 +175,7 @@ export default {
     });
     const { store, findData } = useRepositories(
       { action: "getproductSearchList", param: productObj },
-      ["getproductProps", "getcategoryAll", "getcurrencyAll"]
+      ["getcategoryAll", "getcurrencyAll"]
     );
     const findDoc = (search, next) => {
       if (search == true) {
