@@ -3,6 +3,7 @@ import * as apihelper from './api-helper';
 
 const state = {
   postList: [],
+  fetchpostList:[],
   postProps:[],
   postmessage:'',
   postTotalDoc: 0,
@@ -12,6 +13,7 @@ const state = {
 const getters = {
   getpostProps: state => state.postProps,
   getpostList: state => state.postList,
+  fetchpostList: state => state.fetchpostList,
   getpostTotalDoc: state => state.postTotalDoc,
   getpostWaiting: state => state.postWaiting
 };
@@ -22,8 +24,7 @@ const actions = {
           commit('updatewaiting',true);
           const response = await axios.post(
             `${apihelper.api_url}/post/fetch`,pageObj,apihelper.setToken());
-            console.log(response.data.objList);
-            commit('updatepostList',response.data.objList);
+            commit('updatefetchpostList',response.data.objList);
             commit('updatepostDoc',response.data.totalDoc);
             commit('updatewaiting',false);
         } catch (err) {
@@ -92,6 +93,11 @@ const mutations = {
     updatepostProps:(state,props) => (state.postProps = props),
     updatepostList:(state,list) => (state.postList = list),
     updatepostDoc:(state,doc) => (state.postTotalDoc = doc),
+    updatefetchpostList:(state,list) => {
+      list.forEach(element => {
+        state.fetchpostList.push(element);
+      });
+    },
     newPost: (state, cat) => state.postList.unshift(cat),
     removePost: (state, _id) =>
         (state.postList = state.postList.filter(c => c._id !== _id)),

@@ -1,5 +1,5 @@
 <template>
-  <div v-on:scroll.passive='handleScroll' class="container-fluid">
+  <div class="container-fluid">
     <div class="row">
       <div class="col-12 px-0 my-1">
         <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
@@ -92,9 +92,9 @@ import useRepositories from "../utility/uirepositories";
 import {readBufferImg} from "../utility/helper";
 
 export default {
-  setup() {
+  setup() {    
     let postObj = reactive({
-      pageSize: 9,
+      pageSize: 2,
       page: 1
     });
     const { store, findData } = useRepositories(
@@ -102,30 +102,23 @@ export default {
       []
     );
     const handleScroll = (event) => {
-      console.log(event);
-    }
-    const findDoc = (search, next) => {
-      if (search == true) {
-        postObj.page = 1;
-      } else {
-        if (next == true) {
-          if (postObj.page < store.getters.getpostTotalDoc) {
-            postObj.page = postObj.page + 1;
-          }
-        } else {
-          if (postObj.page > 1) {
-            postObj.page = postObj.page - 1;
-          }
+      // console.log('top' + event.target.scrollingElement.scrollTop);
+      // console.log('topmax' + event.target.scrollingElement.scrollTopMax);
+      if(event.target.scrollingElement.scrollTop == event.target.scrollingElement.scrollTopMax){
+        console.log('you have to load more');
+        if(postObj.page < store.getters.getpostTotalDoc){
+          console.log('you in')
+          postObj.page = postObj.page + 1;
+          findData('fetchpostList',postObj);
         }
       }
-      findData("fetchpostList", postObj);
     };
+    window.addEventListener('scroll', handleScroll);
     return {
-      postList: computed(() => store.getters.getpostList),
+      postList: computed(() => store.getters.fetchpostList),
       postDoc: computed(() => store.getters.getpostTotalDoc),
       postWaiting: computed(() => store.getters.getpostWaiting),
       postObj,
-      findDoc,
       readBufferImg,
       handleScroll
     };
