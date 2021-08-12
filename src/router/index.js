@@ -12,6 +12,7 @@ import Category from '../views/manage/Category.vue'
 import Currency from '../views/manage/Currency.vue'
 import Users from '../views/manage/Users.vue'
 import ControlNotification from '../views/manage/CtlNotification.vue'
+import Presentation from '../views/manage/Presentation.vue'
 
 const routes = [
   {
@@ -81,6 +82,12 @@ const routes = [
         name: 'CtlNotification',
         meta: { title: 'Notification',group:'workarea'},
         component: ControlNotification
+      },
+      {
+        path: 'presentation',
+        name: 'Presentation',
+        meta: { title: 'Presentation',group:'workarea'},
+        component: Presentation
       },
       {
         path: 'users',

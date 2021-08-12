@@ -4,12 +4,24 @@
       <div class="col-12 px-0 my-1">
         <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
           <div class="carousel-inner">
-            <template v-for="item in 10" :key="item" >
-                <div v-if="item==1" class="carousel-item active">
-                  <img src="https://via.placeholder.com/1024x300" class="d-block w-100" alt="...">
+            <template v-for="(item,index) in presentationList" :key="index" >
+                <div v-if="index==0" class="carousel-item active">
+                  <div class="imgmove">
+                    <img :src="`${readBufferImg(item.image)}`" class="d-block w-100" alt="...">
+                  </div>
+                  <div class="carousel-caption d-none d-md-block text-success fw-bold">
+                    <h5>{{item.title}}</h5>
+                    <p>{{item.description}}</p>
+                  </div>
                 </div>
                 <div v-else class="carousel-item">
-                  <img src="https://via.placeholder.com/1024x300" class="d-block w-100" alt="...">
+                  <div class="imgmove">
+                    <img :src="`${readBufferImg(item.image)}`" class="d-block w-100" alt="...">
+                  </div>                  
+                  <div class="carousel-caption d-none d-md-block text-success fw-bold">
+                    <h5>{{item.title}}</h5>
+                    <p>{{item.description}}</p>
+                  </div>
                 </div>
             </template>
           </div>
@@ -82,10 +94,6 @@
   </div>
 </template>
 
-<style lang="scss">
-
-</style>
-
 <script>
 import { reactive, computed } from "vue";
 import useRepositories from "../utility/uirepositories";
@@ -99,7 +107,7 @@ export default {
     });
     const { store, findData } = useRepositories(
       { action: "fetchpostList", param: postObj },
-      []
+      ['getpresentationAll']
     );
     const handleScroll = (event) => {
       // console.log('top' + event.target.scrollingElement.scrollTop);
@@ -116,6 +124,7 @@ export default {
     window.addEventListener('scroll', handleScroll);
     return {
       postList: computed(() => store.getters.fetchpostList),
+      presentationList: computed(() => store.getters.getpresentationList),
       postDoc: computed(() => store.getters.getpostTotalDoc),
       postWaiting: computed(() => store.getters.getpostWaiting),
       postObj,
@@ -134,4 +143,10 @@ export default {
     max-height: 450px;
     overflow: hidden;
   }
+  .imgmove {
+    width: auto;
+    max-height: 550px;
+    overflow: hidden;
+  }
+
 </style>

@@ -46,7 +46,9 @@ export default {
     let notificationObj = reactive({
       pageSize: 9,
       page: 1,
-      searchObj:''
+      searchObj:'',
+      sortBy: "date",
+      sortType: "desc",
     });
     const { store, findData } = useRepositories(
       { action: "getnotificationSearchList", param: notificationObj },
@@ -73,3 +75,6 @@ export default {
   },
 };
 </script>
+<style scoped>
+
+</style>

@@ -6,6 +6,7 @@ import Currency from './modules/currency'
 import Product from './modules/product'
 import Notification from './modules/notification'
 import Post from './modules/post'
+import Presentation from './modules/presentation'
 
 export default createStore({
   modules: {
@@ -15,6 +16,7 @@ export default createStore({
     Product,
     Currency,
     Notification,
-    Post
+    Post,
+    Presentation
   }
 })
