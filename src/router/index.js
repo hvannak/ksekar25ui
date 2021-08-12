@@ -13,6 +13,7 @@ import Currency from '../views/manage/Currency.vue'
 import Users from '../views/manage/Users.vue'
 import ControlNotification from '../views/manage/CtlNotification.vue'
 import Presentation from '../views/manage/Presentation.vue'
+import Promotion from '../views/manage/Promotion.vue'
 
 const routes = [
   {
@@ -88,6 +89,12 @@ const routes = [
         name: 'Presentation',
         meta: { title: 'Presentation',group:'workarea'},
         component: Presentation
+      },
+      {
+        path: 'promotion',
+        name: 'Promotion',
+        meta: { title: 'Promotion',group:'workarea'},
+        component: Promotion
       },
       {
         path: 'users',

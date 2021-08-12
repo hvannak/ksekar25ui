@@ -7,6 +7,7 @@ import Product from './modules/product'
 import Notification from './modules/notification'
 import Post from './modules/post'
 import Presentation from './modules/presentation'
+import Promotion from './modules/promotion'
 
 export default createStore({
   modules: {
@@ -17,6 +18,7 @@ export default createStore({
     Currency,
     Notification,
     Post,
-    Presentation
+    Presentation,
+    Promotion
   }
 })

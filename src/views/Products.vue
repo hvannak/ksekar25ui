@@ -94,6 +94,26 @@
             </div>
           </form>
         </div>
+        <div class="card mt-3">
+          <div class="card-header text-center bg-success">
+            Promotion
+          </div>
+          <div class="card-body">
+            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+              <div class="carousel-inner">
+                <div class="carousel-item active">
+                  <img src="https://via.placeholder.com/350" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://via.placeholder.com/300" class="d-block w-100" alt="...">
+                </div>
+                <div class="carousel-item">
+                  <img src="https://via.placeholder.com/350" class="d-block w-100" alt="...">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
       <div class="col-9 px-2 my-3">
         <div v-if="productWaiting" class="d-flex justify-content-center my-5">

@@ -102,7 +102,7 @@ import {readBufferImg} from "../utility/helper";
 export default {
   setup() {    
     let postObj = reactive({
-      pageSize: 2,
+      pageSize: 9,
       page: 1
     });
     const { store, findData } = useRepositories(

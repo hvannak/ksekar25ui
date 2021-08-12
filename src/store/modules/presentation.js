@@ -3,7 +3,6 @@ import * as apihelper from './api-helper';
 
 const state = {
   presentationList: [],
-  fetchpresentationList:[],
   presentationProps:[],
   presentationmessage:'',
   presentationTotalDoc: 0,
@@ -91,11 +90,6 @@ const mutations = {
     updatepresentationProps:(state,props) => (state.presentationProps = props),
     updatepresentationList:(state,list) => (state.presentationList = list),
     updatepresentationDoc:(state,doc) => (state.presentationTotalDoc = doc),
-    updatefetchpresentationList:(state,list) => {
-      list.forEach(element => {
-        state.fetchpresentationList.push(element);
-      });
-    },
     newPresentation: (state, obj) => state.presentationList.unshift(obj),
     removePresentation: (state, _id) =>
         (state.presentationList = state.presentationList.filter(c => c._id !== _id)),
