@@ -130,7 +130,7 @@
         <div class="modal-content">
           <div class="modal-header">
             <h5 class="modal-title" id="neweditModalLabel">
-              Post Input
+              Presentation Input
             </h5>
             <button
               type="button"
@@ -181,7 +181,7 @@
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">
-                    <fa icon="file" /> | 1024x300
+                    <fa icon="file" /> | 1024x550
                   </div>
                   <input
                     type="file"
@@ -226,7 +226,7 @@
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h5 class="modal-title" id="deleteModalLabel">Post Delete</h5>
+            <h5 class="modal-title" id="deleteModalLabel">Presentation Delete</h5>
             <button
               type="button"
               class="btn-close"
@@ -249,7 +249,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(presentationObj._id,'deleteProduct')"
+              @click="deleteData(presentationObj._id,'deletePresentation')"
             >
               Delete
             </button>

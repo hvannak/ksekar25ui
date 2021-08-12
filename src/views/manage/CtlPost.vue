@@ -252,7 +252,7 @@
               type="button"
               class="btn btn-primary"
               data-bs-dismiss="modal"
-              @click="deleteData(postObj._id,'deleteProduct')"
+              @click="deleteData(postObj._id,'deletePost')"
             >
               Delete
             </button>
