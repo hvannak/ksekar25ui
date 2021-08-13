@@ -9,12 +9,21 @@
       <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
     </div>
     <div class="langmenu">
-      <router-link to="/"><fa icon="language" class="fa-4x" /></router-link>
+      <div class="dropdown">
+        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
+          <fa icon="language" class="fa-3x" />
+        </button>
+        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <li v-for="(item,index) in languageList" :key="index" class="dropdown-item pointer" @click="switchLang(item)">
+            {{item.title}}
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
   <router-view />
   <div id="footer">
-    <p>&copy; - កសិករ២៥ - ទំនាក់ទំនង៖ 078 949 799 - vannak2010@gmail.com</p>
+    <p>&copy; - កសិករ២៥ - {{localizeProperty(localizationList,'contact_us')}}៖ 078 949 799 - vannak2010@gmail.com</p>
     <p>
       <i class="fab fa-facebook-square fa-2x iconline"></i>
       <i class="fab fa-twitter-square fa-2x iconline"></i>
@@ -32,31 +41,43 @@
 <script>
   import AOS from 'aos';
   import 'aos/dist/aos.css';
+  import {ref,computed } from "vue";
+  import { useStore } from "vuex";
+  import {localizeProperty} from "./utility/helper";
 
-  export default {
-    data () {
-      return {
-        moveTop: false,
-      }
-    },
-    created(){
+  export default {  
+    setup() {
       AOS.init();
-      window.addEventListener('scroll', this.handleScroll);
-    },
-    methods: {
-      handleScroll(){
-        if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
-          this.moveTop = true;
+      const moveTop = ref(false);
+      const scrollTop = () => {
+        window.scrollTo(0,0);
+      };
+      const store = useStore();
+      store.dispatch('getLanguageAll');
+      store.dispatch('getlocalizationSwitch',null);
+      const handleScroll = (event) => {
+        if(event.target.scrollingElement.scrollTop > 0){
+          moveTop.value = true;
           var relativefooter = document.getElementById("footer");
           relativefooter.style.position = "relative";
         } else {
-         this.moveTop = false;
+          moveTop.value = false;
           var fixfooter = document.getElementById("footer");
           fixfooter.style.position = "fixed";
         }
-      },
-      scrollTop(){
-        window.scrollTo(0,0);
+      };
+      window.addEventListener('scroll', handleScroll);
+      const switchLang = (item) => {
+        console.log(item._id);
+        store.dispatch('getlocalizationSwitch',item._id);
+      }
+      return {
+        moveTop,
+        scrollTop,
+        languageList: computed(() => store.getters.getLanguageList),
+        localizationList: computed(() => store.getters.getlocalizationList),
+        localizeProperty,
+        switchLang
       }
     }
   }

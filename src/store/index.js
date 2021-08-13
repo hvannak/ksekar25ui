@@ -8,6 +8,7 @@ import Notification from './modules/notification'
 import Post from './modules/post'
 import Presentation from './modules/presentation'
 import Promotion from './modules/promotion'
+import Localization from './modules/localization'
 
 export default createStore({
   modules: {
@@ -19,6 +20,7 @@ export default createStore({
     Notification,
     Post,
     Presentation,
-    Promotion
+    Promotion,
+    Localization
   }
 })

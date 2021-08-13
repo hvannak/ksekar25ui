@@ -53,7 +53,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{item.title}}</h5>
                 <p class="card-text">{{item.description}}</p>
-                <p class="card-text"><small class="text-muted">Last updated
+                <p class="card-text"><small class="text-muted">{{localizeProperty(localizationList,'last_updated')}}
                       {{ item.date.substring(0,10) }}</small></p>
               </div>
             </div>
@@ -67,7 +67,7 @@
               <div class="card-body">
                 <h5 class="card-title">{{item.title}}</h5>
                 <p class="card-text">{{item.description}}</p>
-                <p class="card-text"><small class="text-muted">Last updated
+                <p class="card-text"><small class="text-muted">{{localizeProperty(localizationList,'last_updated')}}
                       {{ item.date.substring(0,10) }}</small></p>
               </div>
             </div>
@@ -97,7 +97,7 @@
 <script>
 import { reactive, computed } from "vue";
 import useRepositories from "../utility/uirepositories";
-import {readBufferImg} from "../utility/helper";
+import {readBufferImg,localizeProperty} from "../utility/helper";
 
 export default {
   setup() {    
@@ -127,9 +127,11 @@ export default {
       presentationList: computed(() => store.getters.getpresentationList),
       postDoc: computed(() => store.getters.getpostTotalDoc),
       postWaiting: computed(() => store.getters.getpostWaiting),
+      localizationList: computed(() => store.getters.getlocalizationList),
       postObj,
       readBufferImg,
-      handleScroll
+      handleScroll,
+      localizeProperty
     };
   },
 };

@@ -6,9 +6,9 @@
           <form class="row row-cols-lg-auto g-3 align-items-center">
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">Category</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'category')}}</div>
                 <select v-model="productObj.category" class="form-select py-2">
-                  <option selected value="0">All</option>
+                  <option selected value="0">{{localizeProperty(localizationList,'all')}}</option>
                   <option
                     v-for="item in categoryList"
                     :key="item"
@@ -21,7 +21,7 @@
 
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">Title</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'title')}}</div>
                 <input
                   v-model="productObj.title"
                   type="text"
@@ -33,7 +33,7 @@
 
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">Description</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'description')}}</div>
                 <input
                   v-model="productObj.description"
                   type="text"
@@ -45,7 +45,7 @@
 
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">From Price</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'fromprice')}}</div>
                 <input
                   v-model="productObj.fromprice"
                   type="text"
@@ -57,7 +57,7 @@
 
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">To Price</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'toprice')}}</div>
                 <input
                   v-model="productObj.toprice"
                   type="text"
@@ -68,9 +68,9 @@
             </div>
             <div class="col-12">
               <div class="input-group">
-                <div class="input-group-text">Currency</div>
+                <div class="input-group-text">{{localizeProperty(localizationList,'currency')}}</div>
                 <select v-model="productObj.currency" class="form-select py-2">
-                  <option selected value="0">Open this select</option>
+                  <option selected value="0">{{localizeProperty(localizationList,'open_this_select')}}</option>
                   <option
                     v-for="item in currencyList"
                     :key="item"
@@ -88,7 +88,7 @@
                   type="button"
                   @click="findDoc(true,false)"
                 >
-                  Search
+                  {{localizeProperty(localizationList,'search')}}
                 </button>
               </div>
             </div>
@@ -96,7 +96,7 @@
         </div>
         <div class="card mt-3">
           <div class="card-header text-center bg-success">
-            Promotion
+            {{localizeProperty(localizationList,'promotion')}}
           </div>
           <div class="card-body">
             <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
@@ -153,7 +153,7 @@
                   </div>
                   <div class="card-footer">
                     <small class="text-muted"
-                      >Last updated
+                      >{{localizeProperty(localizationList,'last_updated')}}
                       {{ item.date.substring(0,10) }}</small
                     >
                   </div>
@@ -170,7 +170,7 @@
                   @click="findDoc(false,false)"
                 />
               </li>
-              <li class="page-item">{{ productObj.page }} Of {{ productDoc }}</li>
+              <li class="page-item">{{ productObj.page }} {{localizeProperty(localizationList,'of')}} {{ productDoc }}</li>
               <li class="page-item">
                 <fa
                   icon="arrow-circle-right"
@@ -190,7 +190,7 @@
 <script>
 import { reactive, computed } from "vue";
 import useRepositories from "../utility/uirepositories";
-import {readBufferImg} from "../utility/helper";
+import {readBufferImg,localizeProperty} from "../utility/helper";
 
 export default {
   setup() {
@@ -231,9 +231,11 @@ export default {
       currencyList: computed(() => store.getters.getcurrencyList),
       productDoc: computed(() => store.getters.getproductTotalDoc),
       productWaiting: computed(() => store.getters.getproductWaiting),
+      localizationList: computed(() => store.getters.getlocalizationList),
       productObj,
       findDoc,
-      readBufferImg
+      readBufferImg,
+      localizeProperty
     };
   },
 };

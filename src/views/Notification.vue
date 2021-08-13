@@ -11,7 +11,7 @@
         </p>
       </div>
       <div class="card-footer">
-        <small class="text-muted">Last updated
+        <small class="text-muted">{{localizeProperty(localizationList,'last_updated')}}
                       {{ item.date.substring(0,10) }}</small>
       </div>
     </div>
@@ -25,7 +25,7 @@
           @click="findDoc(false,false)"
         />
       </li>
-      <li class="page-item">{{ notificationObj.page }} Of {{ notificationDoc }}</li>
+      <li class="page-item">{{ notificationObj.page }} {{localizeProperty(localizationList,'of')}} {{ notificationDoc }}</li>
       <li class="page-item">
         <fa
           icon="arrow-circle-right"
@@ -40,6 +40,7 @@
 <script>
 import { reactive, computed } from "vue";
 import useRepositories from "../utility/uirepositories";
+import {localizeProperty} from "../utility/helper";
 
 export default {
   setup() {
@@ -69,8 +70,10 @@ export default {
     return {
       notificationList: computed(() => store.getters.getnotificationList),
       notificationDoc: computed(() => store.getters.getnotificationTotalDoc),
+      localizationList: computed(() => store.getters.getlocalizationList),
       notificationObj,
-      findDoc
+      findDoc,
+      localizeProperty
     };
   },
 };

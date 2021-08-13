@@ -7,3 +7,10 @@ export function readBufferImg(imagedata) {
   );
   return binary;
 }
+
+export function localizeProperty(list,property) {
+  var data = list.find(x=>x.props == property);
+  if(data)
+    return data.text;
+  else return 'NOT SET'
+}
