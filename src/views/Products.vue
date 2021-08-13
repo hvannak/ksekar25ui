@@ -99,18 +99,29 @@
             Promotion
           </div>
           <div class="card-body">
-            <div id="carouselExampleSlidesOnly" class="carousel slide" data-bs-ride="carousel">
+            <div id="carouselControls" class="carousel slide" data-bs-ride="carousel">
               <div class="carousel-inner">
-                <div class="carousel-item active">
-                  <img src="https://via.placeholder.com/350" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://via.placeholder.com/300" class="d-block w-100" alt="...">
-                </div>
-                <div class="carousel-item">
-                  <img src="https://via.placeholder.com/350" class="d-block w-100" alt="...">
-                </div>
+                <template v-for="(item,index) in promotionList" :key="index">
+                  <div v-if="index==0" class="carousel-item active">
+                    <div class="img">
+                      <img :src="`${readBufferImg(item.image)}`" class="d-block img-fluid w-100" alt="...">
+                    </div>
+                  </div>
+                  <div v-else class="carousel-item">
+                    <div class="img">
+                      <img :src="`${readBufferImg(item.image)}`" class="d-block img-fluid w-100" alt="...">
+                    </div>                  
+                  </div>
+                </template>
               </div>
+              <button class="carousel-control-prev" type="button" data-bs-target="#carouselControls" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+              </button>
+              <button class="carousel-control-next" type="button" data-bs-target="#carouselControls" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+              </button>
             </div>
           </div>
         </div>
@@ -195,7 +206,7 @@ export default {
     });
     const { store, findData } = useRepositories(
       { action: "getproductSearchList", param: productObj },
-      ["getcategoryAll", "getcurrencyAll"]
+      ["getcategoryAll", "getcurrencyAll","getpromotionAll"]
     );
     const findDoc = (search, next) => {
       if (search == true) {
@@ -215,6 +226,7 @@ export default {
     };
     return {
       productList: computed(() => store.getters.getproductList),
+      promotionList: computed(() => store.getters.getpromotionList),
       categoryList: computed(() => store.getters.getcategoryList),
       currencyList: computed(() => store.getters.getcurrencyList),
       productDoc: computed(() => store.getters.getproductTotalDoc),
