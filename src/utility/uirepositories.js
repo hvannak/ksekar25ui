@@ -1,7 +1,10 @@
 import { useStore } from "vuex";
 
-export default function useRepositories(actions) {
+export default function useRepositories(actions,actionsnoparam) {
     const store = useStore();
+    actionsnoparam.forEach(element => {
+        store.dispatch(element);
+    });
     actions.forEach(element => {
         store.dispatch(element.action,element.param);
     });

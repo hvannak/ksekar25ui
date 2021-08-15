@@ -38,23 +38,27 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { reactive, computed,inject,watch } from "vue";
 import useRepositories from "../utility/uirepositories";
 import {localizeProperty} from "../utility/helper";
 
 export default {
   setup() {
+    const language = inject('language');
     let notificationObj = reactive({
       pageSize: 9,
       page: 1,
-      searchObj:'',
-      sortBy: "date",
-      sortType: "desc",
+      lang:language.value
     });
-    const { store, findData } = useRepositories(
-      { action: "getnotificationSearchList", param: notificationObj },
-      []
+    const { store, findData,watchData } = useRepositories(
+      [{ action: "getnotificationSearchList", param: notificationObj }],[]
     );
+    watch(language, (language, prevlanguage) => {
+      if(language != prevlanguage){
+        notificationObj.lang = language;
+        watchData([{ action: "getnotificationSearchList", param: notificationObj }]);
+      }
+    })
     const findDoc = (search, next) => {
       if (next == true) {
         if (notificationObj.page < store.getters.getnotificationTotalDoc) {

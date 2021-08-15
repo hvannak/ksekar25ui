@@ -15,6 +15,17 @@ const getters = {
 };
 
 const actions = {
+  async getcategorybyLang({ commit },lang) {
+    try {
+      const response = await axios.get(
+        `${apihelper.api_url}/category/byLang/` + lang);
+        console.log(response.data);
+        commit('updatecategoryList',response.data);
+    } catch (err) {
+      commit('updatecategorymessage',err.response.data);
+    }
+  },
+
   async getcategoryAll({ commit }) {
     try {
       const response = await axios.get(

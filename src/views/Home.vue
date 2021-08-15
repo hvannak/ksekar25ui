@@ -111,7 +111,7 @@ export default {
       lang: language.value
     };
     const { store, findData,watchData } = useRepositories(
-      [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: presentationObj }]
+      [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: presentationObj }],[]
     );
     watch(language, (language, prevlanguage) => {
       if(language != prevlanguage){

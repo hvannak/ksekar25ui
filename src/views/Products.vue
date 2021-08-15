@@ -188,12 +188,13 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { reactive, computed,inject,watch } from "vue";
 import useRepositories from "../utility/uirepositories";
 import {readBufferImg,localizeProperty} from "../utility/helper";
 
 export default {
   setup() {
+    const language = inject('language');
     let productObj = reactive({
       pageSize: 9,
       page: 1,
@@ -203,11 +204,17 @@ export default {
       fromprice: "",
       toprice:"",
       currency: "0",
+      lang: language.value
     });
-    const { store, findData } = useRepositories(
-      { action: "getproductSearchList", param: productObj },
-      ["getcategoryAll", "getcurrencyAll","getpromotionAll"]
+     const { store, findData,watchData } = useRepositories(
+      [{ action: "getproductSearchList", param: productObj },{ action: "getcategorybyLang", param: language.value }],["getcurrencyAll","getpromotionAll"]
     );
+    watch(language, (language, prevlanguage) => {
+      if(language != prevlanguage){
+        productObj.lang = language;
+        watchData([{ action: "getproductSearchList", param: productObj },{ action: "getcategorybyLang", param: language }]);
+      }
+    });
     const findDoc = (search, next) => {
       if (search == true) {
         productObj.page = 1;
