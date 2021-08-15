@@ -105,15 +105,19 @@ export default {
     let postObj = reactive({
       pageSize: 9,
       page: 1,
-      lang: null
+      lang: language.value
     });
+    let presentationObj = {
+      lang: language.value
+    };
     const { store, findData,watchData } = useRepositories(
-      [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: {lang: null} }]
+      [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: presentationObj }]
     );
     watch(language, (language, prevlanguage) => {
       if(language != prevlanguage){
         postObj.lang = language;
-        watchData([{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: {lang: language} }]);
+        presentationObj.lang = language;
+        watchData([{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: presentationObj }]);
       }
     })
 

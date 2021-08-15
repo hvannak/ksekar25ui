@@ -19,9 +19,9 @@ const getters = {
 const actions = {
   async getpresentationAll({ commit },objData) {
     try {
-      console.log(objData);
       const response = await axios.post(
         `${apihelper.api_url}/presentation/all`,objData);
+        console.log(response.data);
         commit('updatepresentationList',response.data);
     } catch (err) {
       commit('updatepresentationmessage',err.response.data);

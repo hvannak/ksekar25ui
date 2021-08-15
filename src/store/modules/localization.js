@@ -21,7 +21,6 @@ const actions = {
         try {
           const response = await axios.get(
             `${apihelper.api_url}/localization/switch/` + lang);
-            console.log(response.data);
             commit('updatelocalizationList',response.data);
         } catch (err) {
           commit('updatelocalizationmessage',err.response.data);

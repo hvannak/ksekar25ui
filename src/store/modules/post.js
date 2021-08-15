@@ -94,6 +94,8 @@ const mutations = {
     updatepostList:(state,list) => (state.postList = list),
     updatepostDoc:(state,doc) => (state.postTotalDoc = doc),
     updatefetchpostList:(state,list) => {
+      if(list.length == 0)
+        state.fetchpostList = list;
       list.forEach(element => {
         state.fetchpostList.push(element);
       });

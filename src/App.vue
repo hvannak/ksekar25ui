@@ -74,6 +74,7 @@
         localStorage.setItem('language',item._id);
         store.dispatch('getlocalizationSwitch',item._id);
         language.value = item._id;
+        store.commit('updatefetchpostList',[]);
       }
       return {
         moveTop,
