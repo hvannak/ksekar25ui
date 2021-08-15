@@ -101,19 +101,19 @@ import {readBufferImg,localizeProperty} from "../utility/helper";
 
 export default {
   setup() {    
+    const language = inject('language');
     let postObj = reactive({
       pageSize: 9,
-      page: 1
+      page: 1,
+      lang: null
     });
-    const language = inject('language');
-    console.log(language);
     const { store, findData,watchData } = useRepositories(
-      { action: "fetchpostList", param: postObj },
-      ['getpresentationAll']
+      [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: {lang: null} }]
     );
     watch(language, (language, prevlanguage) => {
       if(language != prevlanguage){
-        watchData('watch');
+        postObj.lang = language;
+        watchData([{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: {lang: language} }]);
       }
     })
 

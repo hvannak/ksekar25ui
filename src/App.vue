@@ -71,7 +71,6 @@
       };
       window.addEventListener('scroll', handleScroll);
       const switchLang = (item) => {
-        console.log(item._id);
         localStorage.setItem('language',item._id);
         store.dispatch('getlocalizationSwitch',item._id);
         language.value = item._id;

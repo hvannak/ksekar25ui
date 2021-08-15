@@ -1,10 +1,9 @@
 import { useStore } from "vuex";
 
-export default function useRepositories(initaction,actions) {
+export default function useRepositories(actions) {
     const store = useStore();
-    store.dispatch(initaction.action,initaction.param);
     actions.forEach(element => {
-        store.dispatch(element);
+        store.dispatch(element.action,element.param);
     });
 
     const findData = async (action,objdata) => {
@@ -12,7 +11,9 @@ export default function useRepositories(initaction,actions) {
     };
 
     const watchData = async (actions) => {
-        console.log(actions);
+        actions.forEach(element => {
+            store.dispatch(element.action,element.param);
+        });
     }
 
     return {
