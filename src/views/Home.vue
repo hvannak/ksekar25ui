@@ -95,7 +95,7 @@
 </template>
 
 <script>
-import { reactive, computed } from "vue";
+import { reactive, computed,inject,watch } from "vue";
 import useRepositories from "../utility/uirepositories";
 import {readBufferImg,localizeProperty} from "../utility/helper";
 
@@ -105,10 +105,18 @@ export default {
       pageSize: 9,
       page: 1
     });
-    const { store, findData } = useRepositories(
+    const language = inject('language');
+    console.log(language);
+    const { store, findData,watchData } = useRepositories(
       { action: "fetchpostList", param: postObj },
       ['getpresentationAll']
     );
+    watch(language, (language, prevlanguage) => {
+      if(language != prevlanguage){
+        watchData('watch');
+      }
+    })
+
     const handleScroll = (event) => {
       // console.log('top' + event.target.scrollingElement.scrollTop);
       // console.log('topmax' + event.target.scrollingElement.scrollTopMax);
@@ -131,7 +139,8 @@ export default {
       postObj,
       readBufferImg,
       handleScroll,
-      localizeProperty
+      localizeProperty,
+      language
     };
   },
 };

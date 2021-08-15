@@ -41,7 +41,7 @@
 <script>
   import AOS from 'aos';
   import 'aos/dist/aos.css';
-  import {ref,computed } from "vue";
+  import {ref,computed,provide } from "vue";
   import { useStore } from "vuex";
   import {localizeProperty} from "./utility/helper";
 
@@ -52,9 +52,12 @@
       const scrollTop = () => {
         window.scrollTo(0,0);
       };
+
+      const language = ref(localStorage.getItem('language'));
       const store = useStore();
       store.dispatch('getLanguageAll');
-      store.dispatch('getlocalizationSwitch',null);
+      store.dispatch('getlocalizationSwitch',language.value);
+      provide('language',language);
       const handleScroll = (event) => {
         if(event.target.scrollingElement.scrollTop > 0){
           moveTop.value = true;
@@ -69,7 +72,9 @@
       window.addEventListener('scroll', handleScroll);
       const switchLang = (item) => {
         console.log(item._id);
+        localStorage.setItem('language',item._id);
         store.dispatch('getlocalizationSwitch',item._id);
+        language.value = item._id;
       }
       return {
         moveTop,

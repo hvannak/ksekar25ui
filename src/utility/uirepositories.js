@@ -11,8 +11,13 @@ export default function useRepositories(initaction,actions) {
         store.dispatch(action, objdata);
     };
 
+    const watchData = async (actions) => {
+        console.log(actions);
+    }
+
     return {
         store,
-        findData
+        findData,
+        watchData
     }
 }
