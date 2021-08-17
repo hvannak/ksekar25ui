@@ -120,6 +120,7 @@
     width: 100%;
     color: white;
     text-align: center;
+    z-index: 2;
     background-color: $base-color;
   }
 
