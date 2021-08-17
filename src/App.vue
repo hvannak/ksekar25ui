@@ -4,14 +4,14 @@
       <router-link to="/"><fa icon="tractor" class="fa-4x" />កសិករ២៥</router-link>
     </div>
     <div class="navmenu">
-      <router-link to="/"><fa icon="home" class="fa-4x" /></router-link> |
-      <router-link to="/products"><i class="fas fa-comments-dollar fa-4x"></i></router-link> |
-      <router-link to="/notication"><fa icon="bell" class="fa-4x" /></router-link>
+      <router-link to="/"><fa icon="home" class="fa-3x" /></router-link> |
+      <router-link to="/products"><i class="fas fa-comments-dollar fa-3x"></i></router-link> |
+      <router-link to="/notication"><fa icon="bell" class="fa-3x" /></router-link>
     </div>
     <div class="langmenu">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
-          <fa icon="language" class="fa-3x" />
+          <fa icon="language" class="fa-2x" />
         </button>
         <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
           <li v-for="(item,index) in languageList" :key="index" class="dropdown-item pointer" @click="switchLang(item)">
