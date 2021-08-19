@@ -113,6 +113,7 @@ export default {
     const { store, findData,watchData } = useRepositories(
       [{ action: "fetchpostList", param: postObj },{ action: "getpresentationAll", param: presentationObj }],[]
     );
+    store.commit('updatefetchpostList',[]);
     watch(language, (language, prevlanguage) => {
       if(language != prevlanguage){
         postObj.lang = language;

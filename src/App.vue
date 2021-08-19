@@ -8,7 +8,7 @@
       <router-link to="/products"><i class="fas fa-comments-dollar fa-3x"></i></router-link> |
       <router-link to="/notication"><fa icon="bell" class="fa-3x" /></router-link>
     </div>
-    <div class="langmenu">
+    <div class="langmenu mt-3">
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
           <fa icon="language" class="fa-2x" />
@@ -21,6 +21,7 @@
       </div>
     </div>
   </div>
+
   <router-view />
   <div id="footer">
     <p>&copy; - កសិករ២៥ - {{localizeProperty(localizationList,'contact_us')}}៖ 078 949 799 - vannak2010@gmail.com</p>
