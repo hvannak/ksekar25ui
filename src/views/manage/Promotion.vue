@@ -165,7 +165,7 @@
               <div class="col-12">
                 <div class="input-group">
                   <div class="input-group-text">
-                    <fa icon="file" /> | 1024x550
+                    <fa icon="file" /> | 350x350
                   </div>
                   <input
                     type="file"
