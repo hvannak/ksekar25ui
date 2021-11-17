@@ -121,6 +121,9 @@ const router = createRouter({
 })
 
 router.beforeEach((to, from, next) => {
+  if(to.path == '/'){
+    next({name:'Home'})
+  }
   if((to.name == 'Login' && localStorage.getItem('token') != null)){
     next({name:'ControlPanel'});
   }
