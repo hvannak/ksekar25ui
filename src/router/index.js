@@ -14,22 +14,31 @@ import Users from '../views/manage/Users.vue'
 import ControlNotification from '../views/manage/CtlNotification.vue'
 import Presentation from '../views/manage/Presentation.vue'
 import Promotion from '../views/manage/Promotion.vue'
+import Views from '../views/Views.vue'
 
 const routes = [
   {
-    path: '/',
-    name: 'Home',
-    component: Home
-  },
-  {
-    path: '/notication',
-    name: 'Notification',
-    component: Notification
-  },
-  {
-    path: '/products',
-    name: 'Products',
-    component: Products
+    path: '/views',
+    name: 'Views',
+    meta: { title: 'Views',icon: 'mdi-folder' },
+    component: Views,
+    children:[
+      {
+        path: 'home',
+        name: 'Home',
+        component: Home
+      },
+      {
+        path: 'notication',
+        name: 'Notification',
+        component: Notification
+      },
+      {
+        path: 'products',
+        name: 'Products',
+        component: Products
+      }
+    ]
   },
   {
     path: '/login',
