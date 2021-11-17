@@ -24,14 +24,14 @@
 
   <router-view />
   <div id="footer">
-    <p>&copy; - កសិករ២៥ - {{localizeProperty(localizationList,'contact_us')}}៖ 078 949 799 - vannak2010@gmail.com</p>
+    <p>&copy; - កសិករ២៥ - {{localizeProperty(localizationList,'contact_us')}}៖ 078 949 799 - vannakheng.ksekar25@gmail.com</p>
     <p>
-      <i class="fab fa-facebook-square fa-2x iconline"></i>
-      <i class="fab fa-twitter-square fa-2x iconline"></i>
+      <span @click="openFacebook()"><i class="fab fa-facebook-square fa-2x iconline"></i></span>
+      <!-- <i class="fab fa-twitter-square fa-2x iconline"></i>
       <i class="fab fa-youtube-square fa-2x iconline"></i>
       <i class="fab fa-instagram-square fa-2x iconline"></i>
-      <i class="fab fa-linkedin fa-2x iconline"></i>
-      <i class="fab fa-telegram fa-2x iconline"></i>
+      <i class="fab fa-linkedin fa-2x iconline"></i> -->
+      <span @click="openTelegram()"><i class="fab fa-telegram fa-2x iconline"></i></span>
     </p>
   </div>
       <button v-show="moveTop" @click="scrollTop()" class="mytopBtn" title="Go to top">
@@ -52,6 +52,12 @@
       const moveTop = ref(false);
       const scrollTop = () => {
         window.scrollTo(0,0);
+      };
+      const openFacebook = () =>{
+        window.open("https://www.facebook.com/ksekar25", "_blank"); 
+      };
+      const openTelegram = () =>{
+        window.open("https://t.me/vannakmedivet", "_blank"); 
       };
 
       const language = ref(localStorage.getItem('language'));
@@ -80,6 +86,8 @@
       return {
         moveTop,
         scrollTop,
+        openFacebook,
+        openTelegram,
         languageList: computed(() => store.getters.getLanguageList),
         localizationList: computed(() => store.getters.getlocalizationList),
         localizeProperty,
