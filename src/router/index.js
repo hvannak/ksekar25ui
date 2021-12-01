@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Home from '../views/Home.vue'
 import Notification from '../views/Notification.vue'
 import Products from '../views/Products.vue'
+import ProductDetail from '../views/ProductDetail.vue'
 import Login from '../views/Login.vue'
 import ControlPanel from '../views/ControlPanel.vue'
 import Languages from '../views/manage/Languages.vue'
@@ -37,6 +38,11 @@ const routes = [
         path: 'products',
         name: 'Products',
         component: Products
+      },
+      {
+        path: 'products/:id',
+        name: 'ProductID',
+        component: ProductDetail
       }
     ]
   },

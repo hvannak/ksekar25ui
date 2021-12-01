@@ -2,6 +2,7 @@ import axios from 'axios';
 import * as apihelper from './api-helper';
 
 const state = {
+  product: {},
   productList: [],
   productProps:[],
   productmessage:'',
@@ -10,6 +11,7 @@ const state = {
 };
 
 const getters = {
+  getproduct: state => state.product,
   getproductProps: state => state.productProps,
   getproductList: state => state.productList,
   getproductTotalDoc: state => state.productTotalDoc,
@@ -37,6 +39,20 @@ const actions = {
             `${apihelper.api_url}/product/page`,pageObj,apihelper.setToken());
             commit('updateproductList',response.data.objList);
             commit('updateproductDoc',response.data.totalDoc);
+            commit('updatewaiting',false);
+        } catch (err) {
+          commit('updateproductmessage',err.response.data);
+        }
+      },
+
+      async getproductById({ commit },_id) {
+        try {
+          console.log(_id);
+          commit('updatewaiting',true);
+          const response = await axios.get(
+            `${apihelper.api_url}/product/byId/${_id}`,apihelper.setToken());
+            console.log(response.data);
+            commit('updateproduct',response.data);
             commit('updatewaiting',false);
         } catch (err) {
           commit('updateproductmessage',err.response.data);
@@ -89,6 +105,7 @@ const actions = {
 const mutations = {
     updateproductmessage:(state,message) => (state.productmessage = message),
     updateproductProps:(state,props) => (state.productProps = props),
+    updateproduct:(state,prop) => (state.product = prop),
     updateproductList:(state,list) => (state.productList = list),
     updateproductDoc:(state,doc) => (state.productTotalDoc = doc),
     newProduct: (state, cat) => state.productList.unshift(cat),

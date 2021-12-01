@@ -138,7 +138,7 @@
               <div v-for="item in productList" :key="item" class="col">
                 <div class="card h-100">
                   <div class="img">
-                    <img
+                    <img @click="gotoDetail(item._id)"
                       :src="`${readBufferImg(item.image)}`"
                       class="card-img-top img-fluid"
                       alt="..."
@@ -191,9 +191,11 @@
 import { reactive, computed,inject,watch } from "vue";
 import useRepositories from "../utility/uirepositories";
 import {readBufferImg,localizeProperty} from "../utility/helper";
+import { useRouter } from 'vue-router'
 
 export default {
   setup() {
+    const router = useRouter()
     const language = inject('language');
     let productObj = reactive({
       pageSize: 9,
@@ -231,6 +233,9 @@ export default {
       }
       findData("getproductSearchList", productObj);
     };
+    const gotoDetail = (id) => {
+      router.push({path: "/views/products/" + id})
+    }
     return {
       productList: computed(() => store.getters.getproductList),
       promotionList: computed(() => store.getters.getpromotionList),
@@ -241,6 +246,7 @@ export default {
       localizationList: computed(() => store.getters.getlocalizationList),
       productObj,
       findDoc,
+      gotoDetail,
       readBufferImg,
       localizeProperty
     };
@@ -256,5 +262,8 @@ export default {
     width: auto;
     max-height: 350px;
     overflow: hidden;
+  }
+  .img:hover {
+    cursor: pointer;
   }
 </style>
