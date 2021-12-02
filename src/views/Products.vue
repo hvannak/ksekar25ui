@@ -138,7 +138,7 @@
               <div v-for="item in productList" :key="item" class="col">
                 <div class="card h-100">
                   <div class="img">
-                    <img @click="gotoDetail(item._id)"
+                    <img @click="gotoDetail(item)"
                       :src="`${readBufferImg(item.image)}`"
                       class="card-img-top img-fluid"
                       alt="..."
@@ -233,8 +233,9 @@ export default {
       }
       findData("getproductSearchList", productObj);
     };
-    const gotoDetail = (id) => {
-      router.push({path: "/views/products/" + id})
+    const gotoDetail = (item) => {
+      // router.push({path: "/views/products/" + item._id,params: {category: item.category}})
+      router.push({name: "ProductID",params: {id: item._id,category: item.category}})
     }
     return {
       productList: computed(() => store.getters.getproductList),

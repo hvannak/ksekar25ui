@@ -47,12 +47,24 @@ const actions = {
 
       async getproductById({ commit },_id) {
         try {
-          console.log(_id);
           commit('updatewaiting',true);
           const response = await axios.get(
             `${apihelper.api_url}/product/byId/${_id}`,apihelper.setToken());
-            console.log(response.data);
             commit('updateproduct',response.data);
+            commit('updatewaiting',false);
+        } catch (err) {
+          commit('updateproductmessage',err.response.data);
+        }
+      },
+
+      async getproductByCatId({ commit },_id) {
+        try {
+          console.log(_id);
+          commit('updatewaiting',true);
+          const response = await axios.get(
+            `${apihelper.api_url}/product/byCatId/${_id}`,apihelper.setToken());
+            console.log(response.data);
+            commit('updateproductList',response.data);
             commit('updatewaiting',false);
         } catch (err) {
           commit('updateproductmessage',err.response.data);
