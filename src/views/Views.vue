@@ -6,9 +6,9 @@
     <div class="navmenu">
       <router-link to="/views/home"><fa icon="home" class="fa-3x" /></router-link> |
       <router-link to="/views/products"><i class="fas fa-comments-dollar fa-3x"></i></router-link> |
-      <router-link to="/views/notication"><fa icon="bell" class="fa-3x" /></router-link>
+      <router-link to="/views/notication"><fa icon="cart-plus" class="fa-3x" />4</router-link>
     </div>
-    <div class="langmenu mt-3">
+    <div class="langmenu mt-3">    
       <div class="dropdown">
         <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false">
           <fa icon="language" class="fa-2x" />

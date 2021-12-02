@@ -1,70 +1,7 @@
 <template>
   <div class="container-fluid">
-    <div class="row">
-      <div class="col-3 px-2 my-3">
-        <div class="card bg-light">
-          <div class="card mt-1">
-            <div class="card-header text-center bg-success">
-              {{ localizeProperty(localizationList, "promotion") }}
-            </div>
-            <div class="card-body">
-              <div
-                id="carouselControls"
-                class="carousel slide"
-                data-bs-ride="carousel"
-              >
-                <div class="carousel-inner">
-                  <template v-for="(item, index) in promotionList" :key="index">
-                    <div v-if="index == 0" class="carousel-item active">
-                      <div class="img">
-                        <img
-                          :src="`${readBufferImg(item.image)}`"
-                          class="d-block img-fluid w-100"
-                          alt="..."
-                        />
-                      </div>
-                    </div>
-                    <div v-else class="carousel-item">
-                      <div class="img">
-                        <img
-                          :src="`${readBufferImg(item.image)}`"
-                          class="d-block img-fluid w-100"
-                          alt="..."
-                        />
-                      </div>
-                    </div>
-                  </template>
-                </div>
-                <button
-                  class="carousel-control-prev"
-                  type="button"
-                  data-bs-target="#carouselControls"
-                  data-bs-slide="prev"
-                >
-                  <span
-                    class="carousel-control-prev-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Previous</span>
-                </button>
-                <button
-                  class="carousel-control-next"
-                  type="button"
-                  data-bs-target="#carouselControls"
-                  data-bs-slide="next"
-                >
-                  <span
-                    class="carousel-control-next-icon"
-                    aria-hidden="true"
-                  ></span>
-                  <span class="visually-hidden">Next</span>
-                </button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-9 px-2 my-3">
+    <div class="row">      
+      <div class="col-12 px-2 my-3">
         <div v-if="productWaiting" class="d-flex justify-content-center my-5">
           <div
             class="spinner-border"
@@ -77,7 +14,7 @@
         <template v-else>
           <div class="card p-3">
             <div class="row row-cols-1 row-cols-md-3 g-4">
-              <div class="col-4">
+              <div class="col-3">
                 <div class="card h-100">
                   <div class="img">
                     <img
@@ -104,7 +41,7 @@
                 </div>
               </div>
 
-              <div class="col-8">
+              <div class="col-9">
                 <div class="card bg-light">
                   <div class="card-header text-center bg-success">
                     {{ localizeProperty(localizationList, "related") }}
@@ -114,7 +51,7 @@
                       <div
                         v-for="item in productList"
                         :key="item"
-                        class="col-5"
+                        class="col-4"
                       >
                         <div v-if="product._id != item._id" class="card h-100">
                           <div class="img">
