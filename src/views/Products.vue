@@ -159,7 +159,7 @@
                         {{ item.date.substring(0,10) }}</small>
                       </div>
                       <div class="col-3">
-                        <input v-model="qty" class="form-control form-control-sm" type="number" placeholder="number">
+                        <input v-model="item.qty" class="form-control form-control-sm" type="number" placeholder="number">
                       </div>
                       <div class="col-auto">
                         <small class="text-muted">                        
