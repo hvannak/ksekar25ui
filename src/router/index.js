@@ -3,6 +3,7 @@ import Home from '../views/Home.vue'
 import Notification from '../views/Notification.vue'
 import Products from '../views/Products.vue'
 import ProductDetail from '../views/ProductDetail.vue'
+import ProductCard from '../views/ProductCard.vue'
 import Login from '../views/Login.vue'
 import ControlPanel from '../views/ControlPanel.vue'
 import Languages from '../views/manage/Languages.vue'
@@ -43,6 +44,11 @@ const routes = [
         path: 'products/:id',
         name: 'ProductID',
         component: ProductDetail
+      },
+      {
+        path: 'productcard',
+        name: 'ProductCard',
+        component: ProductCard
       }
     ]
   },

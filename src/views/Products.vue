@@ -152,10 +152,21 @@
                     </p>
                   </div>
                   <div class="card-footer">
-                    <small class="text-muted"
-                      >{{localizeProperty(localizationList,'last_updated')}}
-                      {{ item.date.substring(0,10) }}</small
-                    >
+                    <div class="row d-flex justify-content-between g-1">
+                      <div class="col-auto">
+                        <small class="text-muted"
+                        >{{localizeProperty(localizationList,'last_updated')}}
+                        {{ item.date.substring(0,10) }}</small>
+                      </div>
+                      <div class="col-3">
+                        <input v-model="qty" class="form-control form-control-sm" type="number" placeholder="number">
+                      </div>
+                      <div class="col-auto">
+                        <small class="text-muted">                        
+                          <button @click="addProductCard(item)" type="button" class="btn btn-sm btn-warning">Add Card</button>
+                        </small>
+                      </div>                     
+                    </div>                    
                   </div>
                 </div>
               </div>
@@ -208,7 +219,7 @@ export default {
       currency: "0",
       lang: language.value
     });
-     const { store, findData,watchData } = useRepositories(
+     const { store, findData,watchData,addCard } = useRepositories(
       [{ action: "getproductSearchList", param: productObj },{ action: "getcategorybyLang", param: language.value }],["getcurrencyAll","getpromotionAll"]
     );
     watch(language, (language, prevlanguage) => {
@@ -236,8 +247,12 @@ export default {
     const gotoDetail = (item) => {
       // router.push({path: "/views/products/" + item._id,params: {category: item.category}})
       router.push({name: "ProductID",params: {id: item._id,category: item.category}})
+    };
+    const addProductCard = (item) => {
+      addCard("addProductCard",item)
     }
     return {
+      addProductCard,
       productList: computed(() => store.getters.getproductList),
       promotionList: computed(() => store.getters.getpromotionList),
       categoryList: computed(() => store.getters.getcategoryList),

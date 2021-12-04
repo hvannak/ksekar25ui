@@ -13,6 +13,10 @@ export default function useRepositories(actions,actionsnoparam) {
         store.dispatch(action, objdata);
     };
 
+    const addCard = async (action,objdata) => {
+        store.dispatch(action, objdata);
+    };
+
     const watchData = async (actions) => {
         actions.forEach(element => {
             store.dispatch(element.action,element.param);
@@ -22,6 +26,7 @@ export default function useRepositories(actions,actionsnoparam) {
     return {
         store,
         findData,
-        watchData
+        watchData,
+        addCard
     }
 }

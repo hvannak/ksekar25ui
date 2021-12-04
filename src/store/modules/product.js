@@ -3,6 +3,7 @@ import * as apihelper from './api-helper';
 
 const state = {
   product: {},
+  productcardList:[],
   productList: [],
   productProps:[],
   productmessage:'',
@@ -12,6 +13,7 @@ const state = {
 
 const getters = {
   getproduct: state => state.product,
+  getproductCardList: state => state.productcardList,
   getproductProps: state => state.productProps,
   getproductList: state => state.productList,
   getproductTotalDoc: state => state.productTotalDoc,
@@ -110,6 +112,15 @@ const actions = {
     } catch (err) {
         commit('updateproductmessage',err.response.data);
     }
+  },
+
+  addProductCard({commit},productObj){
+    try{
+      console.log(productObj);
+      commit('updateproductCard', productObj);
+    } catch(err){
+      console.log(err);
+    }
   }
 
 };
@@ -119,6 +130,7 @@ const mutations = {
     updateproductProps:(state,props) => (state.productProps = props),
     updateproduct:(state,prop) => (state.product = prop),
     updateproductList:(state,list) => (state.productList = list),
+    updateproductCard:(state,obj) => state.productcardList.unshift(obj),
     updateproductDoc:(state,doc) => (state.productTotalDoc = doc),
     newProduct: (state, cat) => state.productList.unshift(cat),
     removeProduct: (state, _id) =>
