@@ -163,7 +163,7 @@
                       </div>
                       <div class="col-auto">
                         <small class="text-muted">                        
-                          <button @click="addProductCard(item)" type="button" class="btn btn-sm btn-warning">Add Card</button>
+                          <button @click="addProductCard(item)" type="button" class="btn btn-sm btn-warning">{{localizeProperty(localizationList,'add_card')}}</button>
                         </small>
                       </div>                     
                     </div>                    

@@ -23,7 +23,16 @@
                     </tr>
                 </tbody>
             </table>
-            <div class="py-3"><button type="button" class="btn btn-success">{{localizeProperty(localizationList,'quotation')}}</button></div>
+            <div class="row py-3">
+                <div class="col">
+                    <input v-model="email" class="form-control" type="text" placeholder="email">
+                </div>
+                <div class="col">
+                    <button type="button" class="btn btn-success mx-3">{{localizeProperty(localizationList,'quotation')}}</button>
+                    
+                    <button type="button" class="btn btn-success mx-auto"><i class="fab fa-telegram fa-1x iconline"></i></button>
+                </div>               
+            </div>
         </div>
     </div>
 </template>
@@ -35,6 +44,7 @@ import {localizeProperty} from "../utility/helper";
 export default ({
     setup() {
         const { store,addRemoveCard } = useRepositories([],[]);
+        const email = "";
         const removeProduct = (item) =>{
             addRemoveCard("removeProductCard",item)
         }
@@ -42,7 +52,8 @@ export default ({
             productList: computed(() => store.getters.getproductCardList),
             localizationList: computed(() => store.getters.getlocalizationList),
             localizeProperty,
-            removeProduct
+            removeProduct,
+            email
         }
     },
 })
