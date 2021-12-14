@@ -13,7 +13,7 @@ export default function useRepositories(actions,actionsnoparam) {
         store.dispatch(action, objdata);
     };
 
-    const addCard = async (action,objdata) => {
+    const addRemoveCard = async (action,objdata) => {
         store.dispatch(action, objdata);
     };
 
@@ -27,6 +27,6 @@ export default function useRepositories(actions,actionsnoparam) {
         store,
         findData,
         watchData,
-        addCard
+        addRemoveCard
     }
 }

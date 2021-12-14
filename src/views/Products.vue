@@ -219,7 +219,7 @@ export default {
       currency: "0",
       lang: language.value
     });
-     const { store, findData,watchData,addCard } = useRepositories(
+     const { store, findData,watchData,addRemoveCard } = useRepositories(
       [{ action: "getproductSearchList", param: productObj },{ action: "getcategorybyLang", param: language.value }],["getcurrencyAll","getpromotionAll"]
     );
     watch(language, (language, prevlanguage) => {
@@ -249,7 +249,7 @@ export default {
       router.push({name: "ProductID",params: {id: item._id,category: item.category}})
     };
     const addProductCard = (item) => {
-      addCard("addProductCard",item)
+      addRemoveCard("addProductCard",item)
     }
     return {
       addProductCard,

@@ -121,6 +121,15 @@ const actions = {
     } catch(err){
       console.log(err);
     }
+  },
+
+  removeProductCard({commit},productObj){
+    try{
+      console.log(productObj);
+      commit('removeproductCard', productObj);
+    } catch(err){
+      console.log(err);
+    }
   }
 
 };
@@ -131,6 +140,12 @@ const mutations = {
     updateproduct:(state,prop) => (state.product = prop),
     updateproductList:(state,list) => (state.productList = list),
     updateproductCard:(state,obj) => state.productcardList.unshift(obj),
+    removeproductCard:(state,obj) => {
+      const index = state.productList.findIndex(c => c._id === obj._id);
+        if (index !== -1) {
+          state.productcardList.splice(index, 1);
+        }
+    },
     updateproductDoc:(state,doc) => (state.productTotalDoc = doc),
     newProduct: (state, cat) => state.productList.unshift(cat),
     removeProduct: (state, _id) =>
